@@ -29,7 +29,7 @@ export const loadUser = () => (dispatch) => {
                 })
             }
         }
-    }, 200);
+    }, 500);
 };
 
 export const signUp = ({ name, email, password }) => async (dispatch) => {

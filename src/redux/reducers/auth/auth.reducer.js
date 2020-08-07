@@ -23,7 +23,8 @@ const authReducer = ( state = INTIAL_STATE, action ) => {
         case USER_LOADED: 
             return {
                 ...state,
-                token: localStorage.getItem('token'),
+                token: JSON.parse(localStorage.getItem('token')),
+                user: JSON.parse(localStorage.getItem('user')),
                 success: true,
                 isAuthenticated: true
             };
@@ -47,7 +48,8 @@ const authReducer = ( state = INTIAL_STATE, action ) => {
             };
         
         case SIGN_IN_SUCCESS:
-            localStorage.setItem('token', action.payload.token); 
+            localStorage.setItem('token', JSON.stringify(action.payload.token)); 
+            localStorage.setItem('user', JSON.stringify(action.payload.student)); 
             return {
                 ...state,
                 user: action.payload.student,

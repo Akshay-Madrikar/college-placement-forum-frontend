@@ -2,11 +2,11 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const AdminRoute = ({ auth, component: Component, ...rest }) => (
+const PrivateRoute = ({ auth, component: Component, ...rest }) => (
     <Route 
         {...rest}
         render={ props => 
-            auth.token && auth.user.role === 1 ? (
+            auth.token ? (
                 <Component {...props}/>
             ) : (
                 <Redirect 
@@ -26,4 +26,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(AdminRoute);
+export default connect(mapStateToProps)(PrivateRoute);

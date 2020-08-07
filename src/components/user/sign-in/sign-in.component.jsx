@@ -1,25 +1,24 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //----Components---
-import Layout from '../layout/layout.component';
+import Layout from '../../core/layout/layout.component';
 
 //----Actions----
-import { signUp } from '../../redux/reducers/auth/auth.actions'; 
+import { signIn, loadUser } from '../../../redux/reducers/auth/auth.actions'; 
 
-const SignUp = ({ signUp, auth }) => {
+const SignIn = ({ signIn, auth, loadUser }) => {
 
     const [values, setValues] = useState({
-        name: '',
         email: '',
         password: '',
         errorMessage: '',
         loading: false,
-        success: false
+        redirectToReferrer: false
     });
 
-    const { name, email, password, errorMessage, loading, success} = values;
+    const { email, password, errorMessage, loading, redirectToReferrer} = values;
 
     const handleChange = (name) => (event) => {
         setValues({...values, [name]: event.target.value});
@@ -28,25 +27,20 @@ const SignUp = ({ signUp, auth }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setValues({...values, loading:true});
-        signUp(name, email, password );
-
+        signIn(email, password );
+        console.log(loadUser());
         setValues({
-          ...values,
-          name: '', 
+          ...values, 
           email: '',
           password: '',
           error: '',
-          loading:false,
-          success: true
+          redirectToReferrer: true,
+          loading:false
         });
     };
 
-    const signUpForm = () => (
+    const signInForm = () => (
         <form>
-            <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input type="email" className="form-control" value={name} onChange={handleChange('name')}/>
-            </div>
             <div className="form-group">
                 <label className="text-muted">Email</label>
                 <input type="email" className="form-control" value={email} onChange={handleChange('email')}/>
@@ -73,28 +67,41 @@ const SignUp = ({ signUp, auth }) => {
         )
     );
 
-    const showSuccess = () => (
-        <div className="alert alert-info" style={{display: success ? '' : 'none'}}>
-            New account is created. Please <Link to='/signin'>signin</Link>
-        </div>
-    );
+    const redirectuser = () => {
+        if(redirectToReferrer) {
+            if(auth.user && auth.user.role === 1) {
+                return <Redirect to="/admin/dashboard"/>
+            } else {
+                return <Redirect to="/user/dashboard"/>
+            }
+        }
+
+        if(auth.token) {
+            return <Redirect to="/"/>
+        }
+    }
 
     return (
         <Layout 
-        title="SignUp" 
-        description="Sign Up Page"
+        title="SignIn" 
+        description="Sign in Page"
         className="container col-md-8 offset-md-2"
         >
             {showError()}
             {showLoading()}
-            {showSuccess()}
-            {signUpForm()}
+            {signInForm()}
+            {redirectuser()}
         </Layout>
     )
 };
 
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
 const mapDispatchToProps = (dispatch) => ({
-  signUp: (name, email, password) => dispatch( signUp({ name, email, password }))
+  signIn: (email, password) => dispatch( signIn({ email, password })),
+  loadUser: () => dispatch( loadUser() )
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

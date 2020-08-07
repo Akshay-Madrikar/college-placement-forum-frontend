@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../navbar/navbar.component';
 
-import '../../styles.css';
+import '../../../styles.css';
 
 const Layout = ({ title = 'Title', description = 'Description', className, children }) => {
     return (

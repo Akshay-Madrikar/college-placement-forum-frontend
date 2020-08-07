@@ -1,24 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import { Redirect } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //----Components---
-import Layout from '../layout/layout.component';
+import Layout from '../../core/layout/layout.component';
 
 //----Actions----
-import { signIn, loadUser } from '../../redux/reducers/auth/auth.actions'; 
+import { signUp } from '../../../redux/reducers/auth/auth.actions'; 
 
-const SignIn = ({ signIn, auth, loadUser }) => {
+const SignUp = ({ signUp, auth }) => {
 
     const [values, setValues] = useState({
+        name: '',
         email: '',
         password: '',
         errorMessage: '',
         loading: false,
-        redirectToReferrer: false
+        success: false
     });
 
-    const { email, password, errorMessage, loading, redirectToReferrer} = values;
+    const { name, email, password, errorMessage, loading, success} = values;
 
     const handleChange = (name) => (event) => {
         setValues({...values, [name]: event.target.value});
@@ -27,19 +28,25 @@ const SignIn = ({ signIn, auth, loadUser }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setValues({...values, loading:true});
-        signIn(email, password );
-        console.log(loadUser());
+        signUp(name, email, password );
+
         setValues({
-          ...values, 
+          ...values,
+          name: '', 
           email: '',
           password: '',
           error: '',
-          loading:false
+          loading:false,
+          success: true
         });
     };
 
-    const signInForm = () => (
+    const signUpForm = () => (
         <form>
+            <div className="form-group">
+                <label className="text-muted">Name</label>
+                <input type="email" className="form-control" value={name} onChange={handleChange('name')}/>
+            </div>
             <div className="form-group">
                 <label className="text-muted">Email</label>
                 <input type="email" className="form-control" value={email} onChange={handleChange('email')}/>
@@ -66,41 +73,28 @@ const SignIn = ({ signIn, auth, loadUser }) => {
         )
     );
 
-    // const redirectuser = () => {
-    //     if(redirectToReferrer) {
-    //         if(user && user.role === 1) {
-    //             return <Redirect to="/admin/dashboard"/>
-    //         } else {
-    //             return <Redirect to="/user/dashboard"/>
-    //         }
-    //     }
-
-    //     if(isAuthenticated()) {
-    //         return <Redirect to="/"/>
-    //     }
-    // }
+    const showSuccess = () => (
+        <div className="alert alert-info" style={{display: success ? '' : 'none'}}>
+            New account is created. Please <Link to='/signin'>signin</Link>
+        </div>
+    );
 
     return (
         <Layout 
-        title="SignIn" 
-        description="Sign in Page"
+        title="SignUp" 
+        description="Sign Up Page"
         className="container col-md-8 offset-md-2"
         >
             {showError()}
             {showLoading()}
-            {signInForm()}
-            {/* {redirectuser()} */}
+            {showSuccess()}
+            {signUpForm()}
         </Layout>
     )
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-})
-
 const mapDispatchToProps = (dispatch) => ({
-  signIn: (email, password) => dispatch( signIn({ email, password })),
-  loadUser: () => dispatch( loadUser() )
+  signUp: (name, email, password) => dispatch( signUp({ name, email, password }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(null, mapDispatchToProps)(SignUp);
