@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-// import { removeToken, isAuthenticated } from '../utils/index';
-// import { API } from '../config';
-// import { itemTotal } from '../utils/cartHelpers';
+// Actions
+import { signOut } from '../../redux/reducers/auth/auth.actions'
 
 const isActive = (history, path) => {
     if(history.location.pathname === path) {
@@ -13,83 +13,44 @@ const isActive = (history, path) => {
     }
 };
 
-const Menu = ({ history }) => {
+const Menu = ({ history, auth, signOut }) => {
     return (
         <div>
             <ul className="nav nav-tabs bg-primary">
-                <li className="nav-item">
-                    <Link className="nav-link" style={isActive(history, '/signin')} to="/signin">SignIn</Link>
+            <li className="nav-item">
+                    <Link className="nav-link" style={isActive(history, '/')} to="/">Home</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">SignUp</Link>
-                </li> 
+                    <Link className="nav-link" style={isActive(history, '/shop')} to="/shop">Shop</Link>
+                </li>
+
+                { auth.token ? (
+                    <>
+                        <li className="nav-item">
+                            <span className="nav-link" style={{cursor: 'pointer', color: '#ffffff'}} onClick={() => signOut()}>Signout</span>
+                        </li> 
+                    </> 
+                ) : (
+                    <>
+                        <li className="nav-item">
+                            <Link className="nav-link" style={isActive(history, '/signin')} to="/signin">SignIn</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">SignUp</Link>
+                        </li> 
+                    </>
+                )} 
             </ul>
         </div>
     )
 };
 
-export default withRouter(Menu);
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
 
+const mapDispatchToProps = (dispatch) => ({
+    signOut: () => dispatch( signOut() )
+});
 
-//============= REFERENCE CODE ===============
-
-// const signOut = async () => {
-//     try {
-//         const data = await fetch(`${API}/signout`, {
-//             method: "GET"
-//         });
-//         console.log('signout', data);
-//         removeToken(() => {
-//             history.push("/");
-//         });
-//     } catch(error) {
-//         console.log(error);
-//     };
-// };
-
-// return (
-//     <div>
-//         <ul className="nav nav-tabs bg-primary">
-//             <li className="nav-item">
-//                 <Link className="nav-link" style={isActive(history, '/')} to="/">Home</Link>
-//             </li>
-//             <li className="nav-item">
-//                 <Link className="nav-link" style={isActive(history, '/shop')} to="/shop">Shop</Link>
-//             </li>
-//             <li className="nav-item">
-//                 <Link className="nav-link" style={isActive(history, '/cart')} to="/cart">
-//                 <i className="material-icons">shopping_cart</i><sup><small className="cart-badge">{itemTotal()}</small></sup> 
-//                 </Link>
-//             </li>
-
-//             {isAuthenticated() && isAuthenticated().user.role === 1 && (
-//                 <li className="nav-item">
-//                     <Link className="nav-link" style={isActive(history, '/admin/dashboard')} to="/admin/dashboard">Dashboard</Link>
-//                 </li>
-//             )}
-
-//             {isAuthenticated() && isAuthenticated().user.role === 0 && (
-//                 <li className="nav-item">
-//                     <Link className="nav-link" style={isActive(history, '/user/dashboard')} to="/user/dashboard">Dashboard</Link>
-//                 </li>
-//             )}
-            
-//             { isAuthenticated() ? ( 
-//                 <>
-//                 <li className="nav-item">
-//                     <span className="nav-link" style={{cursor: 'pointer', color: '#ffffff'}} onClick={() => signOut()}>Signout</span>
-//                 </li> 
-//                 </>
-//             ) : (
-//                 <>
-//                 <li className="nav-item">
-//                 <Link className="nav-link" style={isActive(history, '/signin')} to="/signin">SignIn</Link>
-//                     </li>
-//                 <li className="nav-item">
-//                     <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">SignUp</Link>
-//                 </li> 
-//                 </>
-//             )}
-//         </ul>
-//     </div>
-// )
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));

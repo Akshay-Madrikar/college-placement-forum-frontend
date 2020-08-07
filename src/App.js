@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
+// Components
 import LandingPage from './components/landing-page/landing-page.component'
 import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
 import Home from './components/home/home.component';
 
-function App() {
+//Actions
+import { loadUser } from './redux/reducers/auth/auth.actions'
+
+//Utils
+import setAuthToken from './utils/setAuthToken';
+
+if(localStorage.token) {
+  setAuthToken(localStorage.token);
+};
+
+const App = () => {
+
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -31,7 +47,6 @@ function App() {
           </Switch>
       </BrowserRouter>
     </Provider>
-    
   );
 }
 
