@@ -11,6 +11,8 @@ import Home from './components/core/home/home.component';
 
 // Admin Components
 import AdminDashboard from './components/admin/dashboard/dashboard.component';
+import AddCompany from './components/admin/add-company/add-company.component';
+import AddIndustry from './components/admin/add-industry/add-industry.component';
 
 // User Components
 import SignIn from './components/user/sign-in/sign-in.component';
@@ -23,7 +25,7 @@ import PrivateRoute from './utils/privateRoutes';
 import AdminRoute from './utils/adminRoutes';
 
 //Actions
-import { loadUser } from './redux/reducers/auth/auth.actions'
+import { loadUser } from './redux/auth/auth.actions'
 
 if(localStorage.token) {
   setAuthToken(localStorage.token);
@@ -44,6 +46,8 @@ const App = () => {
               <Route exact path="/signup" component={SignUp}/>
               <PrivateRoute exact path="/user/dashboard" component={UserDashboard}/>
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
+              <AdminRoute exact path="/create/company" component={AddCompany}/>
+              <AdminRoute exact path="/create/industry" component={AddIndustry}/>
               {/* <Route exact path="/product/:productId" component={Product}/>
                 <Route exact path="/cart" component={Cart}/>
                 <PrivateRoute exact path="/profile/:userId" component={Profile}/>

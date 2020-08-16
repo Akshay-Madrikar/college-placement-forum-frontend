@@ -10,8 +10,8 @@ import {
     USER_LOADED,
     AUTH_ERROR
 } from './auth.types';
-import { API } from '../../../config';
-import setAuthToken from '../../../utils/setAuthToken' 
+import { API } from '../../config';
+import setAuthToken from '../../utils/setAuthToken' 
 
 export const loadUser = () => (dispatch) => {
 

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Layout from '../../core/layout/layout.component';
 
 //----Actions----
-import { signUp } from '../../../redux/reducers/auth/auth.actions'; 
+import { signUp } from '../../../redux/auth/auth.actions'; 
 
 const SignUp = ({ signUp, auth }) => {
 

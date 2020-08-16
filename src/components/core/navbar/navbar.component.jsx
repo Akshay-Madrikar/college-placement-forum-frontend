@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Actions
-import { signOut } from '../../../redux/reducers/auth/auth.actions'
+import { signOut } from '../../../redux/auth/auth.actions'
 
 const isActive = (history, path) => {
     if(history.location.pathname === path) {
