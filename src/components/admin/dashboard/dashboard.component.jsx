@@ -7,6 +7,7 @@ import Layout from '../../core/layout/layout.component';
 
 const AdminDashboard = ({ auth }) => {
 
+    console.log('Dashboard')
     const adminLinks = () => {
         return (
             <div className="card">

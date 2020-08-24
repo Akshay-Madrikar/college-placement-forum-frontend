@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import Layout from '../../core/layout/layout.component';
 
 //----Actions----
-import { signIn, loadUser } from '../../../redux/auth/auth.actions'; 
+import { signIn } from '../../../redux/auth/auth.actions'; 
 
-const SignIn = ({ signIn, auth, loadUser }) => {
-
+const SignIn = ({ signIn, auth }) => {
+    
     const [values, setValues] = useState({
         email: '',
         password: '',
@@ -28,7 +28,6 @@ const SignIn = ({ signIn, auth, loadUser }) => {
         event.preventDefault();
         setValues({...values, loading:true});
         signIn(email, password );
-        console.log(loadUser());
         setValues({
           ...values, 
           email: '',
@@ -100,8 +99,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  signIn: (email, password) => dispatch( signIn({ email, password })),
-  loadUser: () => dispatch( loadUser() )
+  signIn: (email, password) => dispatch( signIn({ email, password }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

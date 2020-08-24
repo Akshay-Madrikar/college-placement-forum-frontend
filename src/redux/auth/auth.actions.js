@@ -15,7 +15,6 @@ import setAuthToken from '../../utils/setAuthToken'
 
 export const loadUser = () => (dispatch) => {
 
-    setTimeout(() => {
         if(!localStorage.token) {
             dispatch({
                 type: AUTH_ERROR,
@@ -29,7 +28,6 @@ export const loadUser = () => (dispatch) => {
                 })
             }
         }
-    }, 500);
 };
 
 export const signUp = ({ name, email, password }) => async (dispatch) => {
@@ -67,11 +65,12 @@ export const signIn = ({ email, password }) => async (dispatch) => {
     
     try {
         const res = await axios.post(`${API}/signin`, body, config);
-        console.log(res.data)
         dispatch({
             type: SIGN_IN_SUCCESS,
             payload: res.data
         });
+
+        dispatch(loadUser());
     } catch(error) {
             dispatch({
                 type: SIGN_IN_FAILURE,

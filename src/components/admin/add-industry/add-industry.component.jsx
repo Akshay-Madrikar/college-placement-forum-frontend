@@ -22,14 +22,12 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
     };
     
     const handleChange = (event) => {
-        setError('');
         setName(event.target.value);
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setError('');
-        setSuccess(false);
         addIndustry();
     }
 

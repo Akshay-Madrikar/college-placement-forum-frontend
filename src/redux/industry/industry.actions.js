@@ -18,6 +18,7 @@ export const loadIndustries = () => async (dispatch) => {
     
     try {
         const res = await axios.get(`${API}/industries/`,config);
+        console.log(res.data)
         dispatch({
             type: LOAD_INDUSTRY_SUCCESS,
             payload: res.data
@@ -33,14 +34,14 @@ export const loadIndustries = () => async (dispatch) => {
     };
 };
 
-export const createIndustry = ({industryName, id}) => async (dispatch) => {
+export const createIndustry = ({name, id}) => async (dispatch) => {
     const config = {
         headers: {
             'Content-type': 'application/json'
         }
     };
     
-    const body = JSON.stringify({ industryName });
+    const body = JSON.stringify({name});
 
     try {
         const res = await axios.post(`${API}/industry/create/${id}`, body, config);

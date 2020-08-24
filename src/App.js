@@ -27,13 +27,10 @@ import AdminRoute from './utils/adminRoutes';
 //Actions
 import { loadUser } from './redux/auth/auth.actions'
 
-if(localStorage.token) {
-  setAuthToken(localStorage.token);
-};
-
 const App = () => {
 
   useEffect(() => {
+    setAuthToken(localStorage.token);
     store.dispatch(loadUser());
   }, []);
 

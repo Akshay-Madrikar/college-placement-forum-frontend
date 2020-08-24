@@ -13,7 +13,7 @@ const isActive = (history, path) => {
     }
 };
 
-const Menu = ({ history, auth, signOut }) => {
+const Navbar = ({ history, auth, signOut }) => {
     return (
         <div>
             <ul className="nav nav-tabs bg-primary">
@@ -65,4 +65,4 @@ const mapDispatchToProps = (dispatch) => ({
     signOut: () => dispatch( signOut() )
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));
