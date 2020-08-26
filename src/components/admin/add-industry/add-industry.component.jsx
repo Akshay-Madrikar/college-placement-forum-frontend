@@ -12,12 +12,9 @@ import { createIndustry } from '../../../redux/industry/industry.actions';
 const AddIndustry = ({ auth, industry, createIndustry }) => {
 
     const [name, setName] = useState('');
-    const [error, setError] = useState(false);
-    const [success, setSuccess] = useState(false);
 
     const addIndustry = () => {
         createIndustry(name, auth.user._id);
-        setSuccess(true);
         setName('');
     };
     
@@ -27,7 +24,6 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setError('');
         addIndustry();
     }
 
@@ -49,14 +45,14 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
     );
 
     const showSuccess = () => {
-        if(success) {
-            return <h2 className="text-success">{name} is created</h2>
+        if(industry.success) {
+            return <h2 className="text-success">{industry.recent_added_industry.industry.name} is created</h2>
         };
     };
 
     const showError = () => {
-        if(error) {
-            return <h2 className="text-danger">{name} industry already exists!</h2>
+        if(industry.error) {
+            return <h2 className="text-danger">{industry.recent_added_industry.industry.name} industry already exists!</h2>
         };
     };
 

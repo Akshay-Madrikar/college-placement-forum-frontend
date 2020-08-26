@@ -18,7 +18,6 @@ export const loadIndustries = () => async (dispatch) => {
     
     try {
         const res = await axios.get(`${API}/industries/`,config);
-        console.log(res.data)
         dispatch({
             type: LOAD_INDUSTRY_SUCCESS,
             payload: res.data

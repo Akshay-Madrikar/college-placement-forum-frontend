@@ -5,49 +5,48 @@ import { connect } from 'react-redux';
 // Core Components
 import Layout from '../../core/layout/layout.component';
 
+// Utils
+import { getImageUrl } from '../../../utils/cloudImage';
 
 // Actions
 import { createCompany } from '../../../redux/company/company.actions'; 
 import { loadIndustries } from '../../../redux/industry/industry.actions'; 
-import { getImageUrl } from '../../../redux/cloud-image/cloud-image.actions'; 
+ 
 
-const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, getImageUrl }) => {
+const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) => {
 
     const [values, setValues] = useState({
         name: '',
         description: '',
-        industries: [],
         industryName: '',
         openings: '',
         image: '',
-        url: undefined,
-        cloudinary_id: undefined,
         count_of_placed_students: '',
         loading: false,
-        error: '',
         createdCompany: '',
-        redirectToProfile: false,
-        formData: ''
+        formData: {}
     });
+
+    const [imageValues, setImageValues] = useState({
+        url: undefined,
+        cloudinary_id: undefined,
+    })
 
     const [previewImage, setPreviewImage] = useState('');
 
     const {
         name,
         description,
-        industries,
         industryName,
         openings,
         image,
-        url,
-        cloudinary_id,
         count_of_placed_students,
         loading,
-        error,
         createdCompany,
-        redirectToProfile,
         formData
     } = values;
+
+    const { url, cloudinary_id } = imageValues;
 
     useEffect(() => {
         getIndustry();
@@ -60,7 +59,11 @@ const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, get
     }, [url])
 
     const addCompany = () => {
-        createCompany(formData, auth.user._id);
+        setValues({
+            ...values,
+            loading: true
+        });
+        createCompany(formData, imageValues, auth.user._id);
         setValues({
             ...values,
             name: '',
@@ -74,53 +77,54 @@ const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, get
     }
 
     const getIndustry = () => {
-        loadIndustries();
-        setValues({
-            ...values, 
-            industries: industry.industries, 
-            formData: new FormData()
-        });   
+        loadIndustries();  
     }
 
     const handleChange = (name) => (event) => {
-        const value = event.target.value;
-        formData.set(name, value)
+        const value = name === 'image' ? event.target.files[0] : event.target.value;
+        formData[name] = value;
         setValues({...values, [name]: value});
+        if(name === 'image') {
+            previewFile(value)
+        }
     };
-
-    const handleImage = (event) => {
-        const value = event.target.files[0];
-        setValues({
-            ...values,
-            image: value
-        })
-        previewFile(value)
-    }
 
     const previewFile = (file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setPreviewImage(reader.result)
-        }
-    }
+        };
+    };
+
+    const loadImageUrl = async() => {
+        const imageData = new FormData();
+        imageData.append('image', image);
+        const result = await getImageUrl(imageData);
+        setImageValues({
+            url: result.secure_url,
+            cloudinary_id: result.public_id
+        });
+        console.log(imageValues);
+    };
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        setValues({...values, error: '', loading: true});
+        setValues({...values, loading: true});
         if(image) {
-            getImageUrl();
+            loadImageUrl();
         } else {
             addCompany();
         } 
+        setValues({...values, loading: false});
     };
 
     const newPostForm = () => (
-        <form className="mb-3" onSubmit={handleSubmit}>
+        <form className="mb-3" >
             <h4>Company Photo</h4>
             <div className="form-group">
                 <label className="btn btn-secondary">
-                    <input type="file" onChange={handleImage}/>
+                    <input type="file" onChange={handleChange('image')}/>
                     {previewImage && (
                         <img src={previewImage} alt='chosen' style={{height: '250px', padding: '10px'}}/>
                     )}
@@ -156,7 +160,7 @@ const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, get
                     onChange={handleChange('industryName')}
                 >
                     <option>Select industry</option>
-                    { industries && industries.map((ind, index) => (
+                    { industry.industries && industry.industries.map((ind, index) => (
                         <option key={index} value={ind._id}>{ind.name}</option>
                     )) }
                     
@@ -183,7 +187,7 @@ const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, get
                 />
             </div>
 
-            <button className="btn btn-outline-primary">Add Company</button>
+            <button className="btn btn-outline-primary" onClick={handleSubmit}>Add Company</button>
         </form>
     );
 
@@ -194,8 +198,8 @@ const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, get
     );
 
     const showError = () => (
-        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
-            {error}
+        <div className="alert alert-danger" style={{ display: company.error ? '' : 'none' }}>
+            {company.error}
         </div>
     );
 
@@ -236,14 +240,12 @@ const AddCompany = ({ auth, company,industry, createCompany, loadIndustries, get
 const mapStateToProps = (state) => ({
     auth: state.auth,
     company: state.company,
-    industry: state.industry,
-    cloudImage: state.cloudImage
+    industry: state.industry
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    createCompany: (formData, id) => dispatch( createCompany({ formData, id })),
-    loadIndustries: () => dispatch( loadIndustries() ),
-    getImageUrl: (data) => dispatch( createCompany({ data }))
+    createCompany: (formData, imageData, id) => dispatch( createCompany({ formData, imageData, id })),
+    loadIndustries: () => dispatch( loadIndustries() )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCompany);

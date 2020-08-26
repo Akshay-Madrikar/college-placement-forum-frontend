@@ -24,7 +24,7 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
         case ADD_COMPANY_FAILURE:
             return {
                 ...state,
-                error: action.payload.error
+                error: action.payload
             };
         
         default:
