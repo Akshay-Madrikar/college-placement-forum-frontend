@@ -8,6 +8,7 @@ import store from './redux/store';
 // Core Components
 import LandingPage from './components/core/landing-page/landing-page.component';
 import Home from './components/core/home/home.component';
+import DiscoverCompanies from './components/core/discover-companies/discover-companies.component';
 
 // Admin Components
 import AdminDashboard from './components/admin/dashboard/dashboard.component';
@@ -39,6 +40,7 @@ const App = () => {
       <BrowserRouter>
           <Switch>
               <Route exact path="/" component={Home}/>
+              <Route exact path="/discover" component={DiscoverCompanies}/>
               <Route exact path="/signin" component={SignIn}/>
               <Route exact path="/signup" component={SignUp}/>
               <PrivateRoute exact path="/user/dashboard" component={UserDashboard}/>
