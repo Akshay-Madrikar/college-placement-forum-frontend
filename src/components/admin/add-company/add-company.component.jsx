@@ -105,7 +105,6 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
             url: result.secure_url,
             cloudinary_id: result.public_id
         });
-        console.log(imageValues);
     };
     
     const handleSubmit = (event) => {

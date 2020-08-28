@@ -14,7 +14,7 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
 
     const [myFilters, setMyFilters] = useState({
         filters: {
-            category: []
+            industryName: []
         }
     });
 
@@ -23,19 +23,15 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
     const [size, setSize] = useState(0);
 
     useEffect(() => {
-        getIndustry();
-
+        loadIndustries();  
+        getFilteredCompanies(myFilters.filters);
     }, []);
 
-    const getIndustry = () => {
-        loadIndustries();  
-        getFilteredComapnies(myFilters.filters);
-    };
-
-    const getFilteredComapnies = (newFilters) => {
+    const getFilteredCompanies = (newFilters) => {
         loadFilteredCompanies(newFilters, limit, skip);
+        setSize(company.count);
         setSkip(0);
-    }
+    };
 
 
     // const loadMore = async () => {
@@ -81,7 +77,8 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
     const handleFilters = (filters, filterBy) => {
         const newFilters = {...myFilters};
         newFilters.filters[filterBy] = filters;
-        getFilteredComapnies(myFilters.filters);
+    
+        getFilteredCompanies(myFilters.filters);
         setMyFilters(newFilters);
     };
 
@@ -97,7 +94,7 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
                 <div className="col-4">
                     <h4>Filter by industries</h4>
                     <ul>
-                        <Checkbox industries={industry.industries} handleFilters={ filters => handleFilters(filters, 'category')}/>
+                        <Checkbox industries={industry.industries} handleFilters={ filters => handleFilters(filters, 'industryName')}/>
                     </ul>
                 </div>
 
@@ -122,7 +119,6 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
 };
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
     company: state.company,
     industry: state.industry
 });
