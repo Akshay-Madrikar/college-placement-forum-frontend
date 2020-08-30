@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 // Core Components
 import Layout from '../layout/layout.component';
 import Checkbox from '../checkbox/checkbox.component';
+import Spinner from '../spinner/spinner.component';
 //import Card from './Card.component';
 
 // Actions
-import { loadFilteredCompanies } from '../../../redux/company/company.actions';
+import { loadFilteredCompanies, loadMoreCompanies } from '../../../redux/company/company.actions';
 import { loadIndustries } from '../../../redux/industry/industry.actions';
 
-const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, industry }) => {
+const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, loadMoreCompanies, company, industry }) => {
 
     const [myFilters, setMyFilters] = useState({
         filters: {
@@ -18,9 +19,13 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
         }
     });
 
-    const [limit, setLimit] = useState(6);
-    const [skip, setSkip] = useState(0);
-    const [size, setSize] = useState(0);
+    const [ values, setValues ] = useState({
+        limit: 2,
+        skip: 0,
+        loading: false
+    });
+
+    const { limit ,skip, loading } = values;
 
     useEffect(() => {
         loadIndustries();  
@@ -28,51 +33,35 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
     }, []);
 
     const getFilteredCompanies = (newFilters) => {
+        setValues({
+            ...values,
+            loading: true
+        });
         loadFilteredCompanies(newFilters, limit, skip);
-        setSize(company.count);
-        setSkip(0);
+        setValues({
+            ...values,
+            skip: 0,
+            loading: false
+        });
     };
 
+    const getMoreCompanies = async () => {
+        const skipData = await loadMoreCompanies(myFilters.filters, limit, skip);
+        setValues({
+            ...values,
+            skip: skipData,
+        });
+    }
 
-    // const loadMore = async () => {
-    //     try {
-    //         let toSkip = skip + limit;
-
-    //         const data = {
-    //             limit,
-    //             skip: toSkip,
-    //             filters: myFilters.filters
-    //         }
-    //         const products = await fetch(`${API}/products/by/search`, {
-    //             method: "POST",
-    //             headers: {
-    //                 Accept: 'application/json',
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(data)
-    //         });
-    //         const productsJSON = await products.json();
-    //         if(productsJSON.error) {
-    //             setError(productsJSON.error)
-    //         } else {
-    //             setFilteredResults([...filteredResults, ...productsJSON.productsBySearch]);
-    //             setSize(productsJSON.size);
-    //             setSkip(toSkip);
-    //         };  
-    //     } catch(error) {
-    //         console.log(error);
-    //     } 
-    // };
-
-    // const loadMoreButton = () => {
-    //     return (
-    //         size > 0 && size >= limit && (
-    //             <button onClick={loadMore} className="btn btn-warning mb-5">
-    //                 Load more
-    //             </button>
-    //         )
-    //     );
-    // };
+    const loadMoreButton = () => {
+        return (
+            company.count > 0 && company.filtered_count >= limit && (
+                <button onClick={getMoreCompanies} className="btn btn-warning mb-5">
+                    Load more
+                </button>
+            )
+        );
+    };
 
     const handleFilters = (filters, filterBy) => {
         const newFilters = {...myFilters};
@@ -88,6 +77,16 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
         </div>
     );
 
+    const showLoading = (loading) => (
+        loading && ( <Spinner/> )
+    );
+
+    const showEmptyResult = () => (
+        <div className="alert alert-danger" style={{ display: company.count === 0 ? '' : 'none' }}>
+            {`No companies found!`}
+        </div>
+    )
+
     return (
         <Layout title="Discover Page" description="Companies coming to our college" className="container-fluid">
             <div className="row">
@@ -102,7 +101,9 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
                     <h2 className="mb-4">Companies</h2>
                     <div className="row">
                         {showError(company.error)}
-                     {(JSON.stringify(company.filtered_companies))}
+                        {showLoading(loading)}
+                        {showEmptyResult()}
+                     {company.count > 0 && (JSON.stringify(company.filtered_companies))}
 
                      {/* { filteredResults.map((product, index) => (
                             <div key={index} className="col-4 mb-3">
@@ -111,7 +112,7 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, company, ind
                      ))} */}
                     </div>
                     <hr/>
-                    {/* {loadMoreButton()} */}
+                    {loadMoreButton()}
                 </div>
             </div>
         </Layout>
@@ -125,7 +126,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     loadFilteredCompanies: (filters, limit, skip) => dispatch( loadFilteredCompanies({ filters, limit, skip })),
-    loadIndustries: () => dispatch( loadIndustries() )
+    loadIndustries: () => dispatch( loadIndustries() ),
+    loadMoreCompanies: (filters, limit, skip) => dispatch( loadMoreCompanies({ filters, limit, skip }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiscoverCompanies);

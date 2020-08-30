@@ -2,14 +2,23 @@ import {
     ADD_COMPANY_SUCCESS,
     ADD_COMPANY_FAILURE,
     FILTER_SEARCH_COMPANY_SUCCESS,
-    FILTER_SEARCH_COMPANY_FAILURE
+    FILTER_SEARCH_COMPANY_FAILURE,
+    LOAD_SEARCH_COMPANY_SUCCESS,
+    LOAD_SEARCH_COMPANY_FAILURE,
+    LOAD_COMPANY_BY_ARRIVAL_FAILURE,
+    LOAD_COMPANY_BY_ARRIVAL_SUCCESS,
+    LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE,
+    LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_SUCCESS
 } from './company.types';
 
 const INTIAL_STATE = {
     success: false,
     companies: [],
     filtered_companies: [],
+    filtered_count: 0,
     count: 0,
+    companies_by_arrival: [],
+    companies_by_most_placed_students: [],
     recent_added_company: null,
     error: ''
 };
@@ -25,18 +34,47 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
                 success: true
             };
 
-        case ADD_COMPANY_FAILURE:
-        case FILTER_SEARCH_COMPANY_FAILURE:
-            return {
-                ...state,
-                error: action.payload
-            };
-
         case FILTER_SEARCH_COMPANY_SUCCESS:
             return {
                 ...state,
                 count: action.payload.size,
-                filtered_companies: action.payload.companiesBySearch
+                filtered_companies: action.payload.companiesBySearch,
+                filtered_count: action.payload.size,
+                success: true
+            };
+
+        case LOAD_SEARCH_COMPANY_SUCCESS:
+            return {
+                ...state,
+                count: state.count + action.payload.size,
+                filtered_companies: [...state.filtered_companies , ...action.payload.companiesBySearch],
+                filtered_count: action.payload.size,
+                success: true
+            };
+
+        case LOAD_COMPANY_BY_ARRIVAL_SUCCESS:
+            return {
+                ...state,
+                companies_by_arrival: action.payload.companies,
+                success: true
+            };
+
+        case LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_SUCCESS:
+            return {
+                ...state,
+                companies_by_most_placed_students: action.payload.companies,
+                success: true
+            };
+
+        
+        case ADD_COMPANY_FAILURE:
+        case FILTER_SEARCH_COMPANY_FAILURE:
+        case LOAD_SEARCH_COMPANY_FAILURE:
+        case LOAD_COMPANY_BY_ARRIVAL_FAILURE:
+        case LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE:
+            return {
+                ...state,
+                error: action.payload
             };
         
         default:

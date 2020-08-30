@@ -4,7 +4,13 @@ import {
     ADD_COMPANY_SUCCESS,
     ADD_COMPANY_FAILURE,
     FILTER_SEARCH_COMPANY_SUCCESS,
-    FILTER_SEARCH_COMPANY_FAILURE
+    FILTER_SEARCH_COMPANY_FAILURE,
+    LOAD_SEARCH_COMPANY_SUCCESS,
+    LOAD_SEARCH_COMPANY_FAILURE,
+    LOAD_COMPANY_BY_ARRIVAL_SUCCESS,
+    LOAD_COMPANY_BY_ARRIVAL_FAILURE,
+    LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_SUCCESS,
+    LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE
 } from './company.types';
 import { API } from '../../config';
 
@@ -70,3 +76,87 @@ export const loadFilteredCompanies = ({filters = {}, limit, skip}) => async(disp
         });
     } 
 };
+
+export const loadMoreCompanies = ({filters = {}, limit, skip}) => async(dispatch) =>{
+    try {
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        };
+
+        let toSkip = skip + limit;
+
+        const data = {
+            limit,
+            skip: toSkip,
+            filters
+        }
+
+        const body = JSON.stringify(data);
+
+        const res = await axios.post(`${API}/companies/by/search`, body, config);
+        dispatch({
+            type: LOAD_SEARCH_COMPANY_SUCCESS,
+            payload: res.data
+        });
+
+        return toSkip;
+
+    } catch(error) {
+        dispatch({
+            type: LOAD_SEARCH_COMPANY_FAILURE,
+            payload: error.message
+        });
+    } 
+};
+
+export const loadCompaniesByArrivals = () => async(dispatch) =>{
+    try {
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        };
+
+        const res = await axios.get(`${API}/companies?sortBy=createdAt&order=desc&limit=6`, config);
+
+        dispatch({
+            type: LOAD_COMPANY_BY_ARRIVAL_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+        dispatch({
+            type: LOAD_COMPANY_BY_ARRIVAL_FAILURE,
+            payload: error.message
+        });
+    } 
+};
+
+export const loadCompaniesByMostPlacedStudents = () => async(dispatch) =>{
+    try {
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        };
+
+        const res = await axios.get(`${API}/companies?sortBy=count_of_placed_students&order=desc&limit=6`, config);
+
+        dispatch({
+            type: LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+        dispatch({
+            type: LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE,
+            payload: error.message
+        });
+    } 
+};
+

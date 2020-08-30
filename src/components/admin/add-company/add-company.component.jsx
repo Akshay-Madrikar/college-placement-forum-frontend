@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
+import Spinner from '../../core/spinner/spinner.component';
 
 // Utils
 import { getImageUrl } from '../../../utils/cloudImage';
@@ -71,7 +72,7 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
             image: '',
             openings: '',
             count_of_placed_students: '',
-            createdCompany: company.company,
+            createdCompany: company.recent_added_company.company,
             loading: false
         })
     }
@@ -191,8 +192,8 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
     );
 
     const showSuccess = () => (
-        <div className="alert alert-info" style={{ display: createdCompany ? '' : 'none' }}>
-            <h2>{`${name}`} is created!</h2>
+        <div className="alert alert-info" style={{ display: createdCompany.name ? '' : 'none' }}>
+            <h2>{`${createdCompany.name}`} is created!</h2>
         </div>
     );
 
@@ -205,7 +206,7 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
     const showLoading = () => (
         loading && (
             <div className="alert alert-success">
-                <h2>Loading...</h2>
+                <Spinner />
             </div>
         )
     );
