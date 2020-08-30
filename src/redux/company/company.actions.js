@@ -10,7 +10,9 @@ import {
     LOAD_COMPANY_BY_ARRIVAL_SUCCESS,
     LOAD_COMPANY_BY_ARRIVAL_FAILURE,
     LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_SUCCESS,
-    LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE
+    LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE,
+    LOAD_COMPANY_BY_OPENINGS_SUCCESS,
+    LOAD_COMPANY_BY_OPENINGS_FAILURE
 } from './company.types';
 import { API } from '../../config';
 
@@ -155,6 +157,30 @@ export const loadCompaniesByMostPlacedStudents = () => async(dispatch) =>{
     } catch(error) {
         dispatch({
             type: LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE,
+            payload: error.message
+        });
+    } 
+};
+
+export const loadCompaniesByOpenings = () => async(dispatch) =>{
+    try {
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        };
+
+        const res = await axios.get(`${API}/companies?sortBy=openings&order=desc&limit=6`, config);
+
+        dispatch({
+            type: LOAD_COMPANY_BY_OPENINGS_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+        dispatch({
+            type: LOAD_COMPANY_BY_OPENINGS_FAILURE,
             payload: error.message
         });
     } 

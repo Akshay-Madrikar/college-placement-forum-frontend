@@ -7,17 +7,23 @@ import Spinner from '../spinner/spinner.component';
 //import Card from './Card.component';
 
 // Actions
-import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents } from '../../../redux/company/company.actions';
+import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents, loadCompaniesByOpenings } from '../../../redux/company/company.actions';
 
 
 // import Card from './Card.component';
 // import Search from './Search.component';
 
-const Home = ({ company, loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents }) => {
+const Home = (
+    { company, 
+    loadCompaniesByArrivals, 
+    loadCompaniesByMostPlacedStudents, 
+    loadCompaniesByOpenings 
+}) => {
 
     useEffect(() => {
         loadCompaniesByArrivals();
         loadCompaniesByMostPlacedStudents();
+        loadCompaniesByOpenings();
     }, []);
 
     const showError = (error) => (
@@ -33,6 +39,11 @@ const Home = ({ company, loadCompaniesByArrivals, loadCompaniesByMostPlacedStude
             <h2 className="mb-4">New Companies Coming</h2>
             <div className="row">
                 { JSON.stringify(company.companies_by_arrival) }
+            </div>
+
+            <h2 className="mb-4">Most Openings by Companies</h2>
+            <div className="row">
+                { JSON.stringify(company.companies_by_openings) }
             </div>
 
             <h2 className="mb-4">Most students placed companies</h2>
@@ -59,7 +70,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     loadCompaniesByArrivals: () => dispatch( loadCompaniesByArrivals() ),
-    loadCompaniesByMostPlacedStudents: () => dispatch( loadCompaniesByMostPlacedStudents() )
+    loadCompaniesByMostPlacedStudents: () => dispatch( loadCompaniesByMostPlacedStudents() ),
+    loadCompaniesByOpenings: () => dispatch( loadCompaniesByOpenings() )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
