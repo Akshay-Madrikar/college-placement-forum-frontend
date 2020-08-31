@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 // Core Components
 import Layout from '../layout/layout.component';
 import Spinner from '../spinner/spinner.component';
+import Search from '../search/search.component';
 //import Card from './Card.component';
 
 // Actions
 import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents, loadCompaniesByOpenings } from '../../../redux/company/company.actions';
-
-
-// import Card from './Card.component';
-// import Search from './Search.component';
 
 const Home = (
     { company, 
@@ -34,16 +31,16 @@ const Home = (
 
     return (
         <Layout title="Home" description="MERN stack project" className="container-fluid">
-
+            <Search />
             {showError(company.error)}
             <h2 className="mb-4">New Companies Coming</h2>
             <div className="row">
-                { JSON.stringify(company.companies_by_arrival) }
+                { company.companies_by_arrival.length > 0 ? JSON.stringify(company.companies_by_arrival) : <Spinner/>}
             </div>
 
             <h2 className="mb-4">Most Openings by Companies</h2>
             <div className="row">
-                { JSON.stringify(company.companies_by_openings) }
+                { company.companies_by_openings.length > 0 ? JSON.stringify(company.companies_by_openings) : <Spinner/>}
             </div>
 
             <h2 className="mb-4">Most students placed companies</h2>

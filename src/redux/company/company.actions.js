@@ -1,4 +1,5 @@
 import axios from 'axios';
+import queryString from 'query-string'
 
 import {
     ADD_COMPANY_SUCCESS,
@@ -12,7 +13,9 @@ import {
     LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_SUCCESS,
     LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE,
     LOAD_COMPANY_BY_OPENINGS_SUCCESS,
-    LOAD_COMPANY_BY_OPENINGS_FAILURE
+    LOAD_COMPANY_BY_OPENINGS_FAILURE,
+    SEARCH_COMPANY_SUCCESS,
+    SEARCH_COMPANY_FAILURE
 } from './company.types';
 import { API } from '../../config';
 
@@ -181,6 +184,32 @@ export const loadCompaniesByOpenings = () => async(dispatch) =>{
     } catch(error) {
         dispatch({
             type: LOAD_COMPANY_BY_OPENINGS_FAILURE,
+            payload: error.message
+        });
+    } 
+};
+
+export const loadSearchCompanies = ({ params }) => async(dispatch) =>{
+    try {
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        };
+
+        const query = queryString.stringify(params);
+
+        const res = await axios.get(`${API}/companies/search?${query}`, config);
+
+        dispatch({
+            type: SEARCH_COMPANY_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+        dispatch({
+            type: SEARCH_COMPANY_FAILURE,
             payload: error.message
         });
     } 
