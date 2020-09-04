@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+// Core component
+import Card from '../card/card.component';
+
 // Actions
 import { loadSearchCompanies } from '../../../redux/company/company.actions'; 
 import { loadIndustries } from '../../../redux/industry/industry.actions'; 
@@ -20,7 +23,6 @@ const Search = ({ company, industry, loadSearchCompanies, loadIndustries }) => {
     }, []);
 
     const searchData = () => {
-        console.log(search, industryName)
         if(search) {
             loadSearchCompanies({search: search || undefined, industryName: industryName});
         }
@@ -57,11 +59,9 @@ const Search = ({ company, industry, loadSearchCompanies, loadIndustries }) => {
                 </h2>
 
                 <div className="row">
-
-                    { company.searched_companies && company.searched_companies.length > 0 && JSON.stringify(company.searched_companies)}
-                    {/* { company.searched_companies.map((company, index) => (
-                        <Card key={index} company={company}/>
-                    )) } */}
+                    { company.searched_companies && company.searched_companies.length > 0 && company.searched_companies.map((company, index) => (
+                        <Card key={index} company={company} showDetails={false}/>
+                    )) }
                 </div>
             </div>
             

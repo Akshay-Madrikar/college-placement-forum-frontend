@@ -12,7 +12,9 @@ import {
     LOAD_COMPANY_BY_OPENINGS_SUCCESS,
     LOAD_COMPANY_BY_OPENINGS_FAILURE,
     SEARCH_COMPANY_SUCCESS,
-    SEARCH_COMPANY_FAILURE
+    SEARCH_COMPANY_FAILURE,
+    LOAD_SINGLE_COMPANY_SUCCESS,
+    LOAD_SINGLE_COMPANY_FAILURE
 } from './company.types';
 
 const INTIAL_STATE = {
@@ -21,6 +23,7 @@ const INTIAL_STATE = {
     filtered_companies: [],
     filtered_count: 0,
     count: 0,
+    current_company_in_view: {},
     searched_companies: [],
     companies_by_arrival: [],
     companies_by_most_placed_students: [],
@@ -86,6 +89,13 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
                 success: true
             };
 
+        case LOAD_SINGLE_COMPANY_SUCCESS:
+            return {
+                ...state,
+                current_company_in_view: action.payload.company,
+                success: true
+            };
+
         
         case ADD_COMPANY_FAILURE:
         case FILTER_SEARCH_COMPANY_FAILURE:
@@ -94,6 +104,7 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
         case LOAD_COMPANY_BY_MOST_PLACED_STUDENTS_FAILURE:
         case LOAD_COMPANY_BY_OPENINGS_FAILURE:
         case SEARCH_COMPANY_FAILURE:
+        case LOAD_SINGLE_COMPANY_FAILURE:
             return {
                 ...state,
                 error: action.payload

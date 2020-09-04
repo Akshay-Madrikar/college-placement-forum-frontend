@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Layout from '../layout/layout.component';
 import Checkbox from '../checkbox/checkbox.component';
 import Spinner from '../spinner/spinner.component';
-//import Card from './Card.component';
+import Card from '../card/card.component';
 
 // Actions
 import { loadFilteredCompanies, loadMoreCompanies } from '../../../redux/company/company.actions';
@@ -103,13 +103,13 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, loadMoreComp
                         {showError(company.error)}
                         {showLoading(loading)}
                         {showEmptyResult()}
-                     {company.count > 0 && (JSON.stringify(company.filtered_companies))}
 
-                     {/* { filteredResults.map((product, index) => (
+                     { company.count > 0 && company.filtered_companies.map((company, index) => (
                             <div key={index} className="col-4 mb-3">
-                                <Card product={product} showDetails={false}/>
+                                <Card company={company} showDetails={false}/>
                             </div> 
-                     ))} */}
+                     ))}
+
                     </div>
                     <hr/>
                     {loadMoreButton()}

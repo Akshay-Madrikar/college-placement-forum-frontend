@@ -21,7 +21,7 @@ const Navbar = ({ history, auth, signOut }) => {
                     <Link className="nav-link" style={isActive(history, '/')} to="/">Home</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" style={isActive(history, '/disocver')} to="/discover">Discover</Link>
+                    <Link className="nav-link" style={isActive(history, '/discover')} to="/discover">Discover</Link>
                 </li>
 
                 {auth.token && auth.user.role === 1 && (
@@ -38,6 +38,9 @@ const Navbar = ({ history, auth, signOut }) => {
 
                 { auth.token ? (
                     <>
+                        <li className="nav-item">
+                            <Link className="nav-link" style={isActive(history, '/posts')} to="/posts">Posts</Link>
+                        </li> 
                         <li className="nav-item">
                             <span className="nav-link" style={{cursor: 'pointer', color: '#ffffff'}} onClick={() => signOut()}>Signout</span>
                         </li> 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Layout from '../layout/layout.component';
 import Spinner from '../spinner/spinner.component';
 import Search from '../search/search.component';
-//import Card from './Card.component';
+import Card from '../card/card.component';
 
 // Actions
 import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents, loadCompaniesByOpenings } from '../../../redux/company/company.actions';
@@ -35,27 +35,30 @@ const Home = (
             {showError(company.error)}
             <h2 className="mb-4">New Companies Coming</h2>
             <div className="row">
-                { company.companies_by_arrival.length > 0 ? JSON.stringify(company.companies_by_arrival) : <Spinner/>}
+                { company.companies_by_arrival.length > 0 ? company.companies_by_arrival.map((company, index) => (
+                        <div key={index} className="col-4 mb-3">
+                            <Card company={company} showDetails={false}/>
+                        </div> 
+                    )) : <Spinner/>}
             </div>
 
             <h2 className="mb-4">Most Openings by Companies</h2>
             <div className="row">
-                { company.companies_by_openings.length > 0 ? JSON.stringify(company.companies_by_openings) : <Spinner/>}
+                { company.companies_by_openings.length > 0 ? company.companies_by_openings.map((company, index) => (
+                    <div key={index} className="col-4 mb-3">
+                        <Card company={company} showDetails={false}/>
+                    </div> 
+                )) : <Spinner/>}
             </div>
 
             <h2 className="mb-4">Most students placed companies</h2>
             <div className="row">
-                { JSON.stringify(company.companies_by_most_placed_students) }
-            </div>
-
-            {/* <h2 className="mb-4">Best Sellers</h2>
-            <div className="row">
-                { productsBySell.map((product, index) => (
+                { company.companies_by_most_placed_students.length > 0 ? company.companies_by_most_placed_students.map((company, index) => (
                     <div key={index} className="col-4 mb-3">
-                        <Card product={product} showDetails={false}/>
+                        <Card company={company} showDetails={false}/>
                     </div> 
-                )) }
-            </div> */}
+                )) : <Spinner/>}
+            </div>
             
         </Layout>
     );

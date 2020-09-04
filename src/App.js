@@ -9,6 +9,8 @@ import store from './redux/store';
 import LandingPage from './components/core/landing-page/landing-page.component';
 import Home from './components/core/home/home.component';
 import DiscoverCompanies from './components/core/discover-companies/discover-companies.component';
+import Company from './components/core/company/company.component';
+import Posts from './components/core/posts/posts.component';
 
 // Admin Components
 import AdminDashboard from './components/admin/dashboard/dashboard.component';
@@ -43,7 +45,9 @@ const App = () => {
               <Route exact path="/discover" component={DiscoverCompanies}/>
               <Route exact path="/signin" component={SignIn}/>
               <Route exact path="/signup" component={SignUp}/>
+              <Route exact path="/company/:companyId" component={Company}/>
               <PrivateRoute exact path="/user/dashboard" component={UserDashboard}/>
+              <PrivateRoute exact path="/posts" component={Posts}/>
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
               <AdminRoute exact path="/create/company" component={AddCompany}/>
               <AdminRoute exact path="/create/industry" component={AddIndustry}/>
