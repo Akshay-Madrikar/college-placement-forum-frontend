@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Core components
@@ -7,30 +8,36 @@ import Layout from '../../core/layout/layout.component';
 
 // User components
 import PostItem from '../../user/post-item/post-item.component';
+import CommentForm from '../../user/comment-form/comment-form.component';
 
 // Actions
 import { loadSinglePost } from '../../../redux/post/post.actions';
 
 const Post = (props) => {
-    
+
     useEffect(() => {
         const postId = props.match.params.postId;
         props.loadSinglePost(postId);
-    }, []);
+    }, [loadSinglePost]);
 
-    console.log(props.post)
     return (
-    <Layout 
-            title={props.post.current_post_in_view && props.post.current_post_in_view.postedBy} 
-            description={props.post.current_post_in_view && props.post.current_post_in_view.postedBy} 
-            className="container-fluid"
+        <Layout 
+        title="Discussion of the post"
+        description= {props.post.current_post_in_view.postedBy && "Posted by " + props.post.current_post_in_view.postedBy.name}
+        className="container-fluid"
         >
-        {props.post.current_post_in_view  && props.company.current_post_in_view.postedBy &&
-            <PostItem post={props.post.current_post_in_view} showActions={false}/> 
-                
-        }
-    </Layout>
-    
+            <Link to="/posts" className="btn btn-outline-primary mb-2">
+                Back To Posts
+            </Link>
+                {
+                    props.post.current_post_in_view && props.post.current_post_in_view.text && (
+                        <>
+                        <PostItem post={props.post.current_post_in_view} showActions={false}/>
+                        <CommentForm postId={props.post.current_post_in_view._id}/>
+                        </>
+                    )
+                }
+        </Layout>
     )
 };
 

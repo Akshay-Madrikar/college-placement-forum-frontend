@@ -8,7 +8,9 @@ import {
     DELETE_POST_SUCCESS,
     DELETE_POST_FAILURE,
     GET_POST_SUCCESS,
-    GET_POST_FAILURE
+    GET_POST_FAILURE,
+    ADD_COMMENT_SUCCESS,
+    ADD_COMMENT_FAILURE
 } from './post.types';
 
 const INTIAL_STATE = {
@@ -62,11 +64,19 @@ const postReducer = ( state = INTIAL_STATE, action ) => {
                 success: true
             };
         
+        case ADD_COMMENT_SUCCESS:
+            return {
+                ...state,
+                current_post_in_view: { ...state.current_post_in_view, comments: action.payload.comments},
+                success: true
+            };
+        
         case ADD_POST_FAILURE:
         case LOAD_POSTS_FAILURE:
         case UPDATE_LIKES_FAILURE:
         case DELETE_POST_FAILURE:
         case GET_POST_FAILURE:
+        case ADD_COMMENT_FAILURE:
             return {
                 ...state,
                 error: action.payload

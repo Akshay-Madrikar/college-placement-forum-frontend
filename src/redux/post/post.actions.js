@@ -10,7 +10,9 @@ import {
     DELETE_POST_SUCCESS,
     DELETE_POST_FAILURE,
     GET_POST_SUCCESS,
-    GET_POST_FAILURE
+    GET_POST_FAILURE,
+    ADD_COMMENT_SUCCESS,
+    ADD_COMMENT_FAILURE
 } from './post.types';
 import { API } from '../../config';
 
@@ -69,8 +71,6 @@ export const createPost = ({formData, imageData, id}) => async (dispatch) => {
             'Content-type': 'application/json'
         }
     };
-
-    console.log(formData, imageData)
     
     const body = JSON.stringify({ 
                     text: formData.body, 
@@ -163,6 +163,34 @@ export const deletePost = ({ postId, studentId }) => async (dispatch) => {
     } catch(error) {
             dispatch({
                 type: DELETE_POST_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};
+
+export const addComment = ({formData, postId, studentId }) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+    
+    const body = JSON.stringify({ 
+                    text: formData.body, 
+    });
+
+    try {
+        const res = await axios.put(`${API}/comment/${postId}/${studentId}`, body, config);
+        dispatch({
+            type: ADD_COMMENT_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: ADD_COMMENT_FAILURE,
                 payload: error.message
             });
         

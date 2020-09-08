@@ -15,7 +15,7 @@ const PostItem = (
         deletePost,
         showActions
 }) => {
-    console.log(_id, text, likes, pic, postedBy, comments, createdAt )
+    console.log( postedBy )
     const handleLike = () => {
         addLike(_id, auth.user._id);
     };

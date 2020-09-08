@@ -16,6 +16,7 @@ const Company = (props) => {
         props.loadSingleCompany(companyId);
     }, []);
 
+    console.log(props.company)
     const showError = (error) => (
         <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
             {error}
