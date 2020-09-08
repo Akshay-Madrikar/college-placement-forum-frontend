@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Core Components
@@ -11,7 +11,6 @@ import { loadSingleCompany } from '../../../redux/company/company.actions';
 
 const Company = (props) => {
 
-    console.log(props)
     useEffect(() => {
         const companyId = props.match.params.companyId;
         props.loadSingleCompany(companyId);

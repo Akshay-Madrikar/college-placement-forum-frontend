@@ -126,7 +126,7 @@
 
 .post .comment-count {
   background: var(--light-color);
-  color: var(--primary-color);
+  color: black;
   padding: 0.1rem 0.2rem;
   border-radius: 5px;
   font-size: 0.8rem;

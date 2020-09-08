@@ -29,6 +29,7 @@ export const createCompany = ({formData, imageData, id}) => async (dispatch) => 
         }
     };
     
+    console.log(formData, imageData)
     const body = JSON.stringify({ 
                     formData, 
                     pic: {
