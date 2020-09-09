@@ -27,6 +27,7 @@ const CommentForm = ({ auth, post, addComment, postId }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         addComment(formData, postId, auth.user._id);
+        setValues({ ...values, body: '' })
     };
 
     const newCommentForm = () => (  

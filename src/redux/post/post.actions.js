@@ -12,7 +12,9 @@ import {
     GET_POST_SUCCESS,
     GET_POST_FAILURE,
     ADD_COMMENT_SUCCESS,
-    ADD_COMMENT_FAILURE
+    ADD_COMMENT_FAILURE,
+    DELETE_COMMENT_SUCCESS,
+    DELETE_COMMENT_FAILURE
 } from './post.types';
 import { API } from '../../config';
 
@@ -191,6 +193,31 @@ export const addComment = ({formData, postId, studentId }) => async (dispatch) =
     } catch(error) {
             dispatch({
                 type: ADD_COMMENT_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};
+
+export const deleteComment = ({ postId, studentId, commentId }) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.delete(`${API}/comment/${postId}/${studentId}/${commentId}`, config);
+        console.log(res.data)
+        dispatch({
+            type: DELETE_COMMENT_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: DELETE_COMMENT_FAILURE,
                 payload: error.message
             });
         

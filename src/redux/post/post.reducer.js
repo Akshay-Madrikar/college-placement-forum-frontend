@@ -10,7 +10,9 @@ import {
     GET_POST_SUCCESS,
     GET_POST_FAILURE,
     ADD_COMMENT_SUCCESS,
-    ADD_COMMENT_FAILURE
+    ADD_COMMENT_FAILURE,
+    DELETE_COMMENT_SUCCESS,
+    DELETE_COMMENT_FAILURE
 } from './post.types';
 
 const INTIAL_STATE = {
@@ -43,7 +45,9 @@ const postReducer = ( state = INTIAL_STATE, action ) => {
             return {
                 ...state,
                 posts: state.posts.map( post => 
-                        post._id === action.payload._id ? { ...post, likes: action.payload.likes } : post
+                        post._id === action.payload._id 
+                        ? { ...post, likes: action.payload.likes } 
+                        : post
                     ),
                 success: true
             };
@@ -67,7 +71,20 @@ const postReducer = ( state = INTIAL_STATE, action ) => {
         case ADD_COMMENT_SUCCESS:
             return {
                 ...state,
-                current_post_in_view: { ...state.current_post_in_view, comments: action.payload.comments},
+                current_post_in_view: { 
+                    ...state.current_post_in_view, 
+                    comments: action.payload.comments
+                },
+                success: true
+            };
+        
+        case DELETE_COMMENT_SUCCESS:
+            return {
+                ...state,    
+                current_post_in_view: {
+                    ...state.current_post_in_view,
+                    comments: action.payload.comments
+                },     
                 success: true
             };
         
@@ -77,6 +94,7 @@ const postReducer = ( state = INTIAL_STATE, action ) => {
         case DELETE_POST_FAILURE:
         case GET_POST_FAILURE:
         case ADD_COMMENT_FAILURE:
+        case DELETE_COMMENT_FAILURE:
             return {
                 ...state,
                 error: action.payload

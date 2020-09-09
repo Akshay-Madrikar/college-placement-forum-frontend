@@ -9,6 +9,7 @@ import Layout from '../../core/layout/layout.component';
 // User components
 import PostItem from '../../user/post-item/post-item.component';
 import CommentForm from '../../user/comment-form/comment-form.component';
+import CommentItem from '../../user/comment-item/comment-item.component';
 
 // Actions
 import { loadSinglePost } from '../../../redux/post/post.actions';
@@ -18,8 +19,9 @@ const Post = (props) => {
     useEffect(() => {
         const postId = props.match.params.postId;
         props.loadSinglePost(postId);
-    }, [loadSinglePost]);
+    }, [props.loadSinglePost]);
 
+    console.log(props.post.current_post_in_view)
     return (
         <Layout 
         title="Discussion of the post"
@@ -34,6 +36,17 @@ const Post = (props) => {
                         <>
                         <PostItem post={props.post.current_post_in_view} showActions={false}/>
                         <CommentForm postId={props.post.current_post_in_view._id}/>
+                        <div className="comments">
+                            {
+                                props.post.current_post_in_view.comments.map( comment => (
+                                    <CommentItem 
+                                        key={comment._id} 
+                                        comment={comment} 
+                                        postId={props.post.current_post_in_view._id}
+                                    />
+                                ))
+                            }
+                        </div>
                         </>
                     )
                 }

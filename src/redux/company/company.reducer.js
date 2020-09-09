@@ -56,7 +56,10 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
             return {
                 ...state,
                 count: state.count + action.payload.size,
-                filtered_companies: [...state.filtered_companies , ...action.payload.companiesBySearch],
+                filtered_companies: [
+                    ...state.filtered_companies , 
+                    ...action.payload.companiesBySearch
+                ],
                 filtered_count: action.payload.size,
                 success: true
             };
