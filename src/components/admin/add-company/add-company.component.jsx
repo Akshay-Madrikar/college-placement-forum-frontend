@@ -69,6 +69,7 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
             ...values,
             name: '',
             description: '',
+            industryName: '',
             image: '',
             openings: '',
             count_of_placed_students: '',

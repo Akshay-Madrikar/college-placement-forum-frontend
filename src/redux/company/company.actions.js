@@ -17,7 +17,11 @@ import {
     SEARCH_COMPANY_SUCCESS,
     SEARCH_COMPANY_FAILURE,
     LOAD_SINGLE_COMPANY_SUCCESS,
-    LOAD_SINGLE_COMPANY_FAILURE
+    LOAD_SINGLE_COMPANY_FAILURE,
+    LOAD_ALL_COMPANIES_SUCCESS,
+    LOAD_ALL_COMPANIES_FAILURE, 
+    ADD_QUESTION_SUCCESS, 
+    ADD_QUESTION_FAILURE
 } from './company.types';
 import { API } from '../../config';
 
@@ -244,3 +248,54 @@ export const loadSingleCompany = ({ companyId }) => async(dispatch) =>{
     } 
 };
 
+export const loadCompanies = () => async(dispatch) =>{
+    try {
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        };
+
+        const res = await axios.get(`${API}/companies/all`, config);
+
+        dispatch({
+            type: LOAD_ALL_COMPANIES_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+        dispatch({
+            type: LOAD_ALL_COMPANIES_FAILURE,
+            payload: error.message
+        });
+    } 
+};
+
+export const addQuestion = ({formData, companyId, studentId}) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+    
+    const body = JSON.stringify({ 
+                text: formData.body
+    });
+
+    try {
+        const res = await axios.put(`${API}/company/${companyId}/question/create/${studentId}`, body, config);
+        dispatch({
+            type: ADD_QUESTION_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: ADD_QUESTION_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};

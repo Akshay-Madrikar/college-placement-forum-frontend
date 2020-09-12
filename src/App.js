@@ -21,7 +21,8 @@ import AddIndustry from './components/admin/add-industry/add-industry.component'
 // User Components
 import SignIn from './components/user/sign-in/sign-in.component';
 import SignUp from './components/user/sign-up/sign-up.component';
-import UserDashboard  from './components/user/dashboard/dashboard.component';
+import UserDashboard from './components/user/dashboard/dashboard.component';
+import AddQuestionForm from './components/user/add-question-form/add-question-form.component';
 
 //Utils
 import setAuthToken from './utils/setAuthToken';
@@ -50,6 +51,7 @@ const App = () => {
               <PrivateRoute exact path="/user/dashboard" component={UserDashboard}/>
               <PrivateRoute exact path="/post/:postId" component={Post}/>
               <PrivateRoute exact path="/posts" component={Posts}/>
+              <PrivateRoute exact path="/user/company/add-questions" component={AddQuestionForm}/>
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
               <AdminRoute exact path="/create/company" component={AddCompany}/>
               <AdminRoute exact path="/create/industry" component={AddIndustry}/>

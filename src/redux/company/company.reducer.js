@@ -14,7 +14,9 @@ import {
     SEARCH_COMPANY_SUCCESS,
     SEARCH_COMPANY_FAILURE,
     LOAD_SINGLE_COMPANY_SUCCESS,
-    LOAD_SINGLE_COMPANY_FAILURE
+    LOAD_SINGLE_COMPANY_FAILURE,
+    LOAD_ALL_COMPANIES_SUCCESS,
+    LOAD_ALL_COMPANIES_FAILURE, ADD_QUESTION_SUCCESS, ADD_QUESTION_FAILURE
 } from './company.types';
 
 const INTIAL_STATE = {
@@ -99,6 +101,23 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
                 success: true
             };
 
+        case LOAD_ALL_COMPANIES_SUCCESS:
+            return {
+                ...state,
+                companies: action.payload,
+                success: true
+            };
+            
+        case ADD_QUESTION_SUCCESS:
+            return {
+                ...state,
+                companies: state.companies.map(company =>
+                    company._id === action.payload.id 
+                     ? { ...company, questions: action.payload.questions }
+                     : company
+                    ),
+                success: true
+            };
         
         case ADD_COMPANY_FAILURE:
         case FILTER_SEARCH_COMPANY_FAILURE:
@@ -108,6 +127,8 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
         case LOAD_COMPANY_BY_OPENINGS_FAILURE:
         case SEARCH_COMPANY_FAILURE:
         case LOAD_SINGLE_COMPANY_FAILURE:
+        case LOAD_ALL_COMPANIES_FAILURE:
+        case ADD_QUESTION_FAILURE:
             return {
                 ...state,
                 error: action.payload
