@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import parser from 'html-react-parser';
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
@@ -16,12 +17,34 @@ const Company = (props) => {
         props.loadSingleCompany(companyId);
     }, []);
 
-    console.log(props.company)
     const showError = (error) => (
         <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
             {error}
         </div>
     );
+
+    console.log(props.company.current_company_in_view.questions)
+
+    const showQuestions = () => (
+        <div className="card mt-4 mb-5">
+                <h3 className="card-header">Question Bank</h3>
+                <ul className="list-group">
+                 <li className="list-group-item">
+                     { props.company.current_company_in_view && props.company.current_company_in_view.description && 
+                        props.company.current_company_in_view.questions.map((question, index) => (
+                            <div key={index}>
+                                <h6 className="text-dark">{parser(question.text)}</h6>
+                                <h5 className="text-info">
+                                    Submitted By: {question.submitted_by.name} - {question.submitted_by.email}
+                                </h5>
+                                <hr />
+                            </div>
+                        ))
+                     }
+                     </li>
+                </ul>
+        </div>
+    )
 
     return (
         <Layout 
@@ -36,6 +59,7 @@ const Company = (props) => {
                    props.company.current_company_in_view && props.company.current_company_in_view.description &&
                    <Card company={props.company.current_company_in_view} showViewProductButton={false}/>
                 }
+                {showQuestions()}
                 </div>
             </div>
         </Layout>

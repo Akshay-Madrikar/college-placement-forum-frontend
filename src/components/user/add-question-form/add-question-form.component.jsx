@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
@@ -39,6 +41,12 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
         setValues({ ...values, companyName: '', body: '' })
     };
 
+    const handleBody = (event, editor) => {
+        const data = editor.getData();
+        formData.body = data;
+        setValues({ ...values, body: data });
+    }
+
     const newForm = () => (  
         <form className="mb-3" >
             <div className="form-group">
@@ -59,7 +67,7 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
 
             <div className="form-group">
                 <label className="text-muted">Say Something...</label>
-                <textarea 
+                {/* <textarea 
                     type="text" 
                     cols="30"
                     rows="25"
@@ -68,6 +76,11 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
                     value={body} 
                     onChange={handleChange('body')}
                     required
+                /> */}
+                <CKEditor
+                    editor={ClassicEditor}
+                    data={body}
+                    onChange={handleBody}
                 />
             </div>
 
