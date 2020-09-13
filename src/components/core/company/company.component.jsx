@@ -30,7 +30,9 @@ const Company = (props) => {
                 <h3 className="card-header">Question Bank</h3>
                 <ul className="list-group">
                  <li className="list-group-item">
-                     { props.company.current_company_in_view && props.company.current_company_in_view.description && 
+                     { props.company.current_company_in_view && props.company.current_company_in_view.description &&
+                      props.company.current_company_in_view.questions.length > 0 
+                      ?
                         props.company.current_company_in_view.questions.map((question, index) => (
                             <div key={index}>
                                 <h6 className="text-dark">{parser(question.text)}</h6>
@@ -40,6 +42,9 @@ const Company = (props) => {
                                 <hr />
                             </div>
                         ))
+                      : (
+                        <h6 className="text-danger">No questions added yet</h6>
+                      )
                      }
                      </li>
                 </ul>
