@@ -54,7 +54,7 @@ const PostForm = ({ auth, post, createPost }) => {
         createPost(formData, imageValues, auth.user._id);
         setValues({
             ...values,
-            name: '',
+            body: '',
             image: '',
             createdPost: post.recent_added_post,
             loading: false

@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
+// Core Components
+import ShowImage from '../../core/card/image.component';
+
 // Actions
 import { addLike, removeLike, deletePost } from '../../../redux/post/post.actions';
 
@@ -32,12 +35,13 @@ const PostItem = (
         <div className='post bg2-white p-1 my-1'>
             <div>
             <Link to="">
-                <img className='round-img2' src={pic.cloudinary_url} alt='' />
+                <img className='round-img2' alt='' />
                 <h4>{postedBy.name}</h4>
             </Link>
             </div>
 
             <div>
+            { pic && (<ShowImage id={pic.cloudinary_id} height={100} width={100}/>) }
             <p className='my-1'>{text}</p>
             <p className='post-date'>
                 Posted { moment(createdAt).fromNow() } ( {moment(createdAt).format("dddd, MMMM Do YYYY, h:mm")} )

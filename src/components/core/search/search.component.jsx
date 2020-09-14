@@ -58,7 +58,7 @@ const Search = ({ company, industry, loadSearchCompanies, loadIndustries }) => {
                     {searchMessage(searched, company.searched_companies)}
                 </h2>
 
-                <div className="row">
+                <div className="row m-2" >
                     { company.searched_companies && company.searched_companies.length > 0 && company.searched_companies.map((company, index) => (
                         <Card key={index} company={company} showDetails={false}/>
                     )) }

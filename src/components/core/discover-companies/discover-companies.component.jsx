@@ -105,7 +105,7 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, loadMoreComp
                         {showEmptyResult()}
 
                      { company.count > 0 && company.filtered_companies.map((company, index) => (
-                            <div key={index} className="col-4 mb-3">
+                            <div key={index} className="col-5 mb-3">
                                 <Card company={company} showDetails={false}/>
                             </div> 
                      ))}

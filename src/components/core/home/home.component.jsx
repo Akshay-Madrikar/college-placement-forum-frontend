@@ -30,10 +30,10 @@ const Home = (
     );
 
     return (
-        <Layout title="Home" description="MERN stack project" className="container-fluid">
+        <Layout title="Home" description="College Placement Forum" className="container-fluid">
             <Search />
             {showError(company.error)}
-            <h2 className="mb-4">New Companies Coming</h2>
+            <h2 className="mb-4">Recent Added Companies</h2>
             <div className="row">
                 { company.companies_by_arrival.length > 0 ? company.companies_by_arrival.map((company, index) => (
                         <div key={index} className="col-4 mb-3">

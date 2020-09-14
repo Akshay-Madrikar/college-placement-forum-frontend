@@ -32,6 +32,9 @@ const Card = ({
     const showProductDetails = (showDetails) => {
         return ( showDetails && (
             <>
+            <p className="lead mt-2">
+                {company.description}
+            </p>
             <p className="black-9">
                 Industry: {company.industryName.name && company.industryName.name}
             </p>
@@ -68,10 +71,7 @@ const Card = ({
                 <div className="card-header name">{company.name}</div>
                 <div className="card-body">
                     {showRedirect(redirect)}
-                    <ShowImage item={company}/>
-                    <p className="lead mt-2">
-                        {company.description}
-                    </p>
+                    <ShowImage id={company.pic.cloudinary_id}/>
 
                     {showProductDetails(showDetails)}
 

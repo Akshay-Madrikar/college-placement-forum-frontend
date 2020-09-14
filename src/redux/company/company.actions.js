@@ -21,7 +21,7 @@ import {
     LOAD_ALL_COMPANIES_SUCCESS,
     LOAD_ALL_COMPANIES_FAILURE, 
     ADD_QUESTION_SUCCESS, 
-    ADD_QUESTION_FAILURE
+    ADD_QUESTION_FAILURE, UPDATE_COMPANY_SUCCESS, UPDATE_COMPANY_FAILURE, DELETE_COMPANY_SUCCESS, DELETE_COMPANY_FAILURE
 } from './company.types';
 import { API } from '../../config';
 
@@ -33,7 +33,6 @@ export const createCompany = ({formData, imageData, id}) => async (dispatch) => 
         }
     };
     
-    console.log(formData, imageData)
     const body = JSON.stringify({ 
                     formData, 
                     pic: {
@@ -52,6 +51,62 @@ export const createCompany = ({formData, imageData, id}) => async (dispatch) => 
     } catch(error) {
             dispatch({
                 type: ADD_COMPANY_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};
+
+export const updateCompany = ({formData, imageData, id}) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+    
+    const body = JSON.stringify({ 
+                    formData, 
+                    pic: {
+                        cloudinary_url: imageData.url,
+                        cloudinary_id: imageData.cloudinary_id 
+                    } 
+    });
+
+    try {
+        const res = await axios.put(`${API}/company/create/${id}`, body, config);
+        dispatch({
+            type: UPDATE_COMPANY_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: UPDATE_COMPANY_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};
+
+export const deleteCompany = ({ companyId, studentId }) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.delete(`${API}/company/${companyId}/${studentId}`, config);
+        dispatch({
+            type: DELETE_COMPANY_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: DELETE_COMPANY_FAILURE,
                 payload: error.message
             });
         

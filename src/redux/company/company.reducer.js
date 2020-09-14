@@ -16,7 +16,13 @@ import {
     LOAD_SINGLE_COMPANY_SUCCESS,
     LOAD_SINGLE_COMPANY_FAILURE,
     LOAD_ALL_COMPANIES_SUCCESS,
-    LOAD_ALL_COMPANIES_FAILURE, ADD_QUESTION_SUCCESS, ADD_QUESTION_FAILURE
+    LOAD_ALL_COMPANIES_FAILURE, 
+    ADD_QUESTION_SUCCESS, 
+    ADD_QUESTION_FAILURE, 
+    UPDATE_COMPANY_SUCCESS,
+    UPDATE_COMPANY_FAILURE,
+    DELETE_COMPANY_SUCCESS,
+    DELETE_COMPANY_FAILURE
 } from './company.types';
 
 const INTIAL_STATE = {
@@ -40,8 +46,24 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
         case ADD_COMPANY_SUCCESS:
             return {
                 ...state,
-                recent_added_company: action.payload,
-                companies: [action.payload,...state.companies],
+                recent_added_company: action.payload.company,
+                companies: [action.payload.company,...state.companies],
+                success: true
+            };
+
+        case UPDATE_COMPANY_SUCCESS:
+            return {
+                ...state,
+                current_company_in_view: action.payload.company,
+                success: true
+            };
+        
+        case DELETE_COMPANY_SUCCESS:
+            return {
+                ...state,
+                companies: state.companies.filter( company => 
+                        company._id !== action.payload.company._id
+                    ),
                 success: true
             };
 
@@ -129,6 +151,8 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
         case LOAD_SINGLE_COMPANY_FAILURE:
         case LOAD_ALL_COMPANIES_FAILURE:
         case ADD_QUESTION_FAILURE:
+        case UPDATE_COMPANY_FAILURE:
+        case DELETE_COMPANY_FAILURE:
             return {
                 ...state,
                 error: action.payload

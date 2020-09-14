@@ -37,14 +37,15 @@ const Post = (props) => {
                         <PostItem post={props.post.current_post_in_view} showActions={false}/>
                         <CommentForm postId={props.post.current_post_in_view._id}/>
                         <div className="comments">
+                            <h4 className="text-dark">Comments:</h4>
                             {
-                                props.post.current_post_in_view.comments.map( comment => (
+                               props.post.current_post_in_view.comments.length > 0 ? props.post.current_post_in_view.comments.map( comment => (
                                     <CommentItem 
                                         key={comment._id} 
                                         comment={comment} 
                                         postId={props.post.current_post_in_view._id}
                                     />
-                                ))
+                                )) : <h5 className="text-danger">No comments posted yet!</h5>
                             }
                         </div>
                         </>

@@ -44,17 +44,17 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
         </form>
     );
 
-    const showSuccess = () => {
-        if(industry.success) {
-            return <h2 className="text-success">{industry.recent_added_industry.industry.name} is created</h2>
-        };
-    };
+    // const showSuccess = () => (
+    //     <div className="alert alert-info" style={{ display: industry.recent_added_industry !== null && industry.recent_added_industry ? '' : 'none' }}>
+    //         <h2>{`${industry.recent_added_industry.name}`} is created!</h2>
+    //     </div>
+    // );
 
-    const showError = () => {
-        if(industry.error) {
-            return <h2 className="text-danger">{industry.recent_added_industry.industry.name} industry already exists!</h2>
-        };
-    };
+    const showError = (error) => (
+        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
+            {error}
+        </div>    
+    );
 
     const goBack = () => (
         <div className="mt-5">
@@ -71,8 +71,8 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {showError()}
-                    {showSuccess()}
+                    {showError(industry.error)}
+                    {/* {showSuccess()} */}
                     {newIndustryForm()}
                     {goBack()}
                 </div>

@@ -17,6 +17,7 @@ import Posts from './components/core/posts/posts.component';
 import AdminDashboard from './components/admin/dashboard/dashboard.component';
 import AddCompany from './components/admin/add-company/add-company.component';
 import AddIndustry from './components/admin/add-industry/add-industry.component';
+import ManageCompanies from './components/admin/manage-companies/manage-companies.component';
 
 // User Components
 import SignIn from './components/user/sign-in/sign-in.component';
@@ -55,6 +56,7 @@ const App = () => {
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
               <AdminRoute exact path="/create/company" component={AddCompany}/>
               <AdminRoute exact path="/create/industry" component={AddIndustry}/>
+              <AdminRoute exact path="/admin/companies" component={ManageCompanies}/>
               {/* <Route exact path="/product/:productId" component={Product}/>
                 <Route exact path="/cart" component={Cart}/>
                 <PrivateRoute exact path="/profile/:userId" component={Profile}/>
