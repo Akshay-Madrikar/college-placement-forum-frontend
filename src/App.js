@@ -18,6 +18,8 @@ import AdminDashboard from './components/admin/dashboard/dashboard.component';
 import AddCompany from './components/admin/add-company/add-company.component';
 import AddIndustry from './components/admin/add-industry/add-industry.component';
 import ManageCompanies from './components/admin/manage-companies/manage-companies.component';
+import ManageStudents from './components/admin/manage-students/manage-students.component';
+import UpdateCompany from './components/admin/update-company/update-company.component';
 
 // User Components
 import SignIn from './components/user/sign-in/sign-in.component';
@@ -54,17 +56,11 @@ const App = () => {
               <PrivateRoute exact path="/posts" component={Posts}/>
               <PrivateRoute exact path="/user/company/add-questions" component={AddQuestionForm}/>
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
-              <AdminRoute exact path="/create/company" component={AddCompany}/>
-              <AdminRoute exact path="/create/industry" component={AddIndustry}/>
+              <AdminRoute exact path="/admin/create/company" component={AddCompany}/>
+              <AdminRoute exact path="/admin/create/industry" component={AddIndustry}/>
               <AdminRoute exact path="/admin/companies" component={ManageCompanies}/>
-              {/* <Route exact path="/product/:productId" component={Product}/>
-                <Route exact path="/cart" component={Cart}/>
-                <PrivateRoute exact path="/profile/:userId" component={Profile}/>
-                <AdminRoute exact path="/create/category" component={AddCategory}/>
-                <AdminRoute exact path="/create/product" component={AddProduct}/>
-                <AdminRoute exact path="/admin/orders" component={Orders}/>
-                <AdminRoute exact path="/admin/products" component={ManageProducts}/>
-                <AdminRoute exact path="/admin/product/update/:productId" component={UpdateProduct}/> */}
+              <AdminRoute exact path="/admin/students" component={ManageStudents}/>
+              <AdminRoute exact path="/admin/update/company/:companyId" component={UpdateCompany}/>
           </Switch>
       </BrowserRouter>
     </Provider>

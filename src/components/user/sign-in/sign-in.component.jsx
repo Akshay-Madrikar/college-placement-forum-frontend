@@ -52,9 +52,9 @@ const SignIn = ({ signIn, auth }) => {
         </form>
     );
 
-    const showError = () => (
-        <div className="alert alert-danger" style={{display: errorMessage ? '' : 'none'}}>
-            {errorMessage}
+    const showError = (error) => (
+        <div className="alert alert-danger" style={{display: error ? '' : 'none'}}>
+            {error}
         </div>
     );
         
@@ -86,7 +86,7 @@ const SignIn = ({ signIn, auth }) => {
         description="Sign in Page"
         className="container col-md-8 offset-md-2"
         >
-            {showError()}
+            {showError(auth.error)}
             {showLoading()}
             {signInForm()}
             {redirectuser()}

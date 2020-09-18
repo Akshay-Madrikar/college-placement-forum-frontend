@@ -23,8 +23,6 @@ const Company = (props) => {
         </div>
     );
 
-    console.log(props.company.current_company_in_view.questions)
-
     const showQuestions = () => (
         <div className="card mt-4 mb-5">
                 <h3 className="card-header">Question Bank</h3>

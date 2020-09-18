@@ -1,5 +1,5 @@
 import axios from 'axios';
-import queryString from 'query-string'
+import queryString from 'query-string';
 
 import {
     ADD_COMPANY_SUCCESS,
@@ -57,7 +57,7 @@ export const createCompany = ({formData, imageData, id}) => async (dispatch) => 
     };
 };
 
-export const updateCompany = ({formData, imageData, id}) => async (dispatch) => {
+export const updateCompany = ({formData, imageData, id, companyId}) => async (dispatch) => {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -74,7 +74,7 @@ export const updateCompany = ({formData, imageData, id}) => async (dispatch) => 
     });
 
     try {
-        const res = await axios.put(`${API}/company/create/${id}`, body, config);
+        const res = await axios.put(`${API}/company/${companyId}/${id}`, body, config);
         dispatch({
             type: UPDATE_COMPANY_SUCCESS,
             payload: res.data

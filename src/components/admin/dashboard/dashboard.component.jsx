@@ -14,13 +14,16 @@ const AdminDashboard = ({ auth }) => {
                 <h4 className="card-header">Admin Links</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <Link className="nav-link" to="/create/industry">Add Industry</Link>
+                        <Link className="nav-link" to="/admin/create/industry">Add Industry</Link>
                     </li>
                     <li className="list-group-item">
-                        <Link className="nav-link" to="/create/company">Add Company</Link>
+                        <Link className="nav-link" to="/admin/create/company">Add Company</Link>
                     </li>
                     <li className="list-group-item">
                         <Link className="nav-link" to="/admin/companies">Manage Companies</Link>
+                    </li>
+                    <li className="list-group-item">
+                        <Link className="nav-link" to="/admin/students">Manage Students</Link>
                     </li>
                 </ul>
             </div>
