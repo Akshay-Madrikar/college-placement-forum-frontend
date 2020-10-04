@@ -35,7 +35,7 @@ const PostItem = (
         <div className='post bg2-white p-1 my-1'>
             <div>
             <Link to="">
-                <img className='round-img2' alt='' />
+                <img className='round-img2' src={postedBy.pic.cloudinary_url} alt='' />
                 <h4>{postedBy.name}</h4>
             </Link>
             </div>

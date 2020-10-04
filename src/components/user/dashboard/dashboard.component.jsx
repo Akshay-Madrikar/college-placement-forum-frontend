@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
 
-const UserDashboard = ({ auth }) => {
+// Actions
+import { loadUser } from '../../../redux/auth/auth.actions'
+
+const UserDashboard = ({ auth, loadUser }) => {
+
+    useEffect(() => {
+        loadUser();
+    },[])
 
     const userLinks = () => {
         return (
@@ -16,7 +23,7 @@ const UserDashboard = ({ auth }) => {
                         <Link className="nav-link" to="/user/company/add-questions">Add Company Questions</Link>
                     </li>
                     <li className="list-group-item">
-                        <Link className="nav-link" to={`/profile/${auth.user._id}`}>Update profile</Link>
+                        <Link className="nav-link" to={`/user/profile/${auth.user._id}`}>Update profile</Link>
                     </li>
                 </ul>
             </div>
@@ -30,7 +37,7 @@ const UserDashboard = ({ auth }) => {
                 <ul className="list-group">
                     <li className="list-group-item">{auth.user.name}</li>
                     <li className="list-group-item">{auth.user.email}</li>
-                    <li className="list-group-item">{auth.user.role === 1 ? 'Admin' : 'Registered User'}</li>
+                    <li className="list-group-item">{auth.user.role === 1 ? 'Admin' : 'Registered Student'}</li>
                 </ul>
             </div>
         );
@@ -58,4 +65,8 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(UserDashboard);
+const mapDispatchToProps = (dispatch) => ({
+    loadUser: () => dispatch( loadUser() )
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDashboard);

@@ -20,7 +20,7 @@ const INTIAL_STATE = {
 const authReducer = ( state = INTIAL_STATE, action ) => {
     switch(action.type) {
 
-        case USER_LOADED: 
+        case USER_LOADED:
             return {
                 ...state,
                 token: JSON.parse(localStorage.getItem('token')),

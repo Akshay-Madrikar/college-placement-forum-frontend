@@ -57,7 +57,7 @@ const SignIn = ({ signIn, auth }) => {
             {error}
         </div>
     );
-        
+
     const showLoading = () => (
         loading && (
         <div className="alert alert-info">
@@ -96,7 +96,7 @@ const SignIn = ({ signIn, auth }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   signIn: (email, password) => dispatch( signIn({ email, password }))

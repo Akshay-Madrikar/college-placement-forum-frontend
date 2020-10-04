@@ -8,7 +8,7 @@ import Layout from '../../core/layout/layout.component';
 //----Actions----
 import { signUp } from '../../../redux/auth/auth.actions'; 
 
-const SignUp = ({ signUp, auth }) => {
+const SignUp = ({ signUp }) => {
 
     const [values, setValues] = useState({
         name: '',

@@ -2,7 +2,11 @@ import {
    LOAD_STUDENTS_SUCCESS,
    LOAD_STUDENTS_FAILURE, 
    BLOCK_STATUS_FAILURE, 
-   BLOCK_STATUS_SUCCESS
+   BLOCK_STATUS_SUCCESS,
+   UPDATE_PROFILE_SUCCESS,
+   UPDATE_PROFILE_FAILURE,
+   GET_PROFILE_SUCCESS,
+   GET_PROFILE_FAILURE
 } from './student.types';
 
 const INTIAL_STATE = {
@@ -12,13 +16,28 @@ const INTIAL_STATE = {
     error: ''
 };
 
-const authReducer = ( state = INTIAL_STATE, action ) => {
+const studentReducer = ( state = INTIAL_STATE, action ) => {
     switch(action.type) {
 
         case LOAD_STUDENTS_SUCCESS: 
             return {
                 ...state,
                 students: action.payload,
+                success: true
+            };
+
+        case GET_PROFILE_SUCCESS:
+            return {
+                ...state,
+                current_user_in_view: action.payload.student,
+                success: true
+            };
+
+        case UPDATE_PROFILE_SUCCESS:
+            localStorage.setItem('user', JSON.stringify(action.payload.student)); 
+            return {
+                ...state,
+                current_user_in_view: action.payload.student,
                 success: true
             };
 
@@ -36,7 +55,9 @@ const authReducer = ( state = INTIAL_STATE, action ) => {
 
 
         case LOAD_STUDENTS_FAILURE:
+        case GET_PROFILE_FAILURE:
         case BLOCK_STATUS_FAILURE:
+        case UPDATE_PROFILE_FAILURE:
             return {
                 ...state,
                 error: action.payload.error
@@ -47,4 +68,4 @@ const authReducer = ( state = INTIAL_STATE, action ) => {
     };
 };
 
-export default authReducer;
+export default studentReducer;
