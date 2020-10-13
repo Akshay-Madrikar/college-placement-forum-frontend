@@ -6,13 +6,18 @@ import {
    UPDATE_PROFILE_SUCCESS,
    UPDATE_PROFILE_FAILURE,
    GET_PROFILE_SUCCESS,
-   GET_PROFILE_FAILURE
+   GET_PROFILE_FAILURE,
+   RESET_PASSWORD_SUCCESS,
+   RESET_PASSWORD_FAILURE,
+   NEW_PASSWORD_SUCCESS,
+   NEW_PASSWORD_FAILURE
 } from './student.types';
 
 const INTIAL_STATE = {
     students: [],
     current_user_in_view: null,
     success: false,
+    message: '',
     error: ''
 };
 
@@ -52,12 +57,25 @@ const studentReducer = ( state = INTIAL_STATE, action ) => {
                 ),
                 success: true
             };
+        
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                message: action.payload.message
+            }
 
+        case NEW_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                message: action.payload.message
+            }
 
         case LOAD_STUDENTS_FAILURE:
         case GET_PROFILE_FAILURE:
         case BLOCK_STATUS_FAILURE:
         case UPDATE_PROFILE_FAILURE:
+        case RESET_PASSWORD_FAILURE:
+        case NEW_PASSWORD_FAILURE:
             return {
                 ...state,
                 error: action.payload.error

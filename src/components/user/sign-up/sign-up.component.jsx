@@ -56,6 +56,9 @@ const SignUp = ({ signUp }) => {
                 <input type="password" className="form-control" value={password} onChange={handleChange('password')}/>
             </div>
             <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            <h5 className="mt-2">
+                <Link to="/signin" style={{ textDecoration: 'inherit'}}>Already have an account?</Link>
+            </h5>
         </form>
     );
 

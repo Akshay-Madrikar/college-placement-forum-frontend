@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //----Components---
@@ -48,7 +48,13 @@ const SignIn = ({ signIn, auth }) => {
                 <label className="text-muted">Password</label>
                 <input type="password" className="form-control" value={password} onChange={handleChange('password')}/>
             </div>
+            <h6>
+                <Link to="/reset-password" style={{ color: 'inherit', textDecoration: 'inherit'}}>Forgot your password?</Link>
+            </h6>
             <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            <h5 className="mt-2">
+                <Link to="/signup" style={{ textDecoration: 'inherit'}}>Don't have an account?</Link>
+            </h5>
         </form>
     );
 

@@ -10,7 +10,11 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAILURE,
   GET_PROFILE_SUCCESS,
-  GET_PROFILE_FAILURE
+  GET_PROFILE_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+  NEW_PASSWORD_SUCCESS,
+  NEW_PASSWORD_FAILURE
 } from './student.types';
 
 export const loadStudents = () => async(dispatch) =>{
@@ -143,6 +147,63 @@ export const UnblockStudent = ({ studentId, adminId }) => async (dispatch) => {
     } catch(error) {
             dispatch({
                 type: BLOCK_STATUS_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};
+
+export const resetPassword = ({ email }) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ 
+        email
+    });
+
+    try {
+        const res = await axios.post(`${API}/reset-password`,body, config);
+        dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: RESET_PASSWORD_FAILURE,
+                payload: error.message
+            });
+        
+    };
+};
+
+export const setNewPassword = ({ password, token }) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ 
+        password,
+        token
+    });
+
+    try {
+        const res = await axios.post(`${API}/new-password`,body, config);
+        dispatch({
+            type: NEW_PASSWORD_SUCCESS,
+            payload: res.data
+        });
+
+    } catch(error) {
+            dispatch({
+                type: NEW_PASSWORD_FAILURE,
                 payload: error.message
             });
         
