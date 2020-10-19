@@ -23,6 +23,7 @@ const UpdateProfile = ({ match, auth, student, updateProfile }) => {
         password: '',
         image: '',
         loading: false,
+        success: false,
         formData: {}
     });
 
@@ -39,6 +40,7 @@ const UpdateProfile = ({ match, auth, student, updateProfile }) => {
         password,
         image,
         loading,
+        success,
         formData
     } = values;
 
@@ -62,7 +64,8 @@ const UpdateProfile = ({ match, auth, student, updateProfile }) => {
             email: '',
             password: '',
             image: '',
-            loading: false
+            loading: false,
+            success: true
         })
     }
 
@@ -151,24 +154,16 @@ const UpdateProfile = ({ match, auth, student, updateProfile }) => {
         </form>
     );
 
-    // const showSuccess = () => (
-    //     <div className="alert alert-info" style={{ display: createdCompany.name ? '' : 'none' }}>
-    //         <h2>{`${createdCompany.name}`} is created!</h2>
-    //     </div>
-    // );
+    const showSuccess = (success) => (
+        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+            <h2>Profile updated successfully!</h2>
+        </div>
+    );
 
     const showError = () => (
         <div className="alert alert-danger" style={{ display: student.error ? '' : 'none' }}>
             {student.error}
         </div>
-    );
-
-    const showLoading = () => (
-        loading && (
-            <div className="alert alert-success">
-                <Spinner />
-            </div>
-        )
     );
 
     const goBack = () => (
@@ -186,9 +181,8 @@ const UpdateProfile = ({ match, auth, student, updateProfile }) => {
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {showLoading()}
                     {showError()}
-                    {/* {showSuccess()} */}
+                    {showSuccess(success)}
                     {newPostForm()}
                     {goBack()}
                 </div>

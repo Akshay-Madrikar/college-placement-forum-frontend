@@ -2,7 +2,9 @@ import {
     LOAD_INDUSTRY_SUCCESS,
     LOAD_INDUSTRY_FAILURE,
     ADD_INDUSTRY_SUCCESS,
-    ADD_INDUSTRY_FAILURE
+    ADD_INDUSTRY_FAILURE,
+    DELETE_INDUSTRY_SUCCESS,
+    DELETE_INDUSTRY_FAILURE
 } from './industry.types';
 
 const INTIAL_STATE = {
@@ -36,7 +38,17 @@ const industryReducer = ( state = INTIAL_STATE, action ) => {
                 success: true
             };
         
+        case DELETE_INDUSTRY_SUCCESS:
+            return {
+                ...state,
+                industries: state.industries.filter( industry => 
+                        industry._id !== action.payload.industry._id
+                    ),
+                success: true
+            };
+        
         case LOAD_INDUSTRY_FAILURE:
+        case DELETE_INDUSTRY_FAILURE:
             return {
                 ...state,
                 error: action.payload.error.message

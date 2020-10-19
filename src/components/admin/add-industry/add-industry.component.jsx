@@ -12,6 +12,7 @@ import { createIndustry } from '../../../redux/industry/industry.actions';
 const AddIndustry = ({ auth, industry, createIndustry }) => {
 
     const [name, setName] = useState('');
+    const [success, setSuccess] = useState(false);
 
     const addIndustry = () => {
         createIndustry(name, auth.user._id);
@@ -25,6 +26,7 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         addIndustry();
+        setSuccess(true);
     }
 
     const newIndustryForm = () => (
@@ -44,11 +46,11 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
         </form>
     );
 
-    // const showSuccess = () => (
-    //     <div className="alert alert-info" style={{ display: industry.recent_added_industry !== null && industry.recent_added_industry ? '' : 'none' }}>
-    //         <h2>{`${industry.recent_added_industry.name}`} is created!</h2>
-    //     </div>
-    // );
+    const showSuccess = (success) => (
+        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+            <h2>{`${industry.recent_added_industry && industry.recent_added_industry.industry.name}`} is created!</h2>
+        </div>
+    );
 
     const showError = (error) => (
         <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
@@ -72,7 +74,7 @@ const AddIndustry = ({ auth, industry, createIndustry }) => {
             <div className="row">
                 <div className="col-md-8 offset-md-2">
                     {showError(industry.error)}
-                    {/* {showSuccess()} */}
+                    {showSuccess(success)}
                     {newIndustryForm()}
                     {goBack()}
                 </div>

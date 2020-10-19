@@ -16,12 +16,14 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
         companyName:'',
         body: '',
         createdComment: '',
+        success: false,
         formData: {}
     });
 
     const {
         companyName,
         body,
+        success,
         formData
     } = values;
 
@@ -38,7 +40,12 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         addQuestion(formData, companyName, auth.user._id);
-        setValues({ ...values, companyName: '', body: '' })
+        setValues({ 
+            ...values, 
+            companyName: '', 
+            body: '', 
+            success: true 
+        });
     };
 
     const handleBody = (event, editor) => {
@@ -67,16 +74,6 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
 
             <div className="form-group">
                 <label className="text-muted">Say Something...</label>
-                {/* <textarea 
-                    type="text" 
-                    cols="30"
-                    rows="25"
-                    placeholder="Add questions"
-                    className="form-control" 
-                    value={body} 
-                    onChange={handleChange('body')}
-                    required
-                /> */}
                 <CKEditor
                     editor={ClassicEditor}
                     data={body}
@@ -88,17 +85,11 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
         </form>
     );
 
-    const showSuccess = (name) => (
-        <div className="alert alert-info" style={{ display: name ? '' : 'none' }}>
-            <h2>{`${name}`} is created!</h2>
+    const showSuccess = (success) => (
+        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+            <h2>Question added successfully!</h2>
         </div>
     );
-
-    // const showError = (error) => (
-    //     <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
-    //         {error}
-    //     </div>
-    // );
 
     return (
         <Layout
@@ -107,8 +98,7 @@ const AddQuestionForm = ({ auth, company, loadCompanies, addQuestion }) => {
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {/* {showError(company.error)} */}
-                    {/* {showSuccess(post.createdPost.postedBy.name)} */}
+                    {showSuccess(success)}
                     {newForm()}
                 </div>
             </div> 

@@ -26,6 +26,7 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
         image: '',
         count_of_placed_students: '',
         loading: false,
+        success: false,
         formData: {}
     });
 
@@ -44,14 +45,26 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
         image,
         count_of_placed_students,
         loading,
+        success,
         formData
     } = values;
 
     const { url, cloudinary_id } = imageValues;
 
     useEffect(() => {
-        init();
-    }, []);
+        loadIndustries();
+        loadSingleCompany(companyId);
+        setValues({
+            ...values,
+            name: company.current_company_in_view.name,
+            description: company.current_company_in_view.description,
+            industryName: company.current_company_in_view.industryName,
+            image: '',
+            openings: company.current_company_in_view.openings,
+            count_of_placed_students: company.current_company_in_view.count_of_placed_students,
+            loading: false
+        })
+    }, [loadSingleCompany, companyId]);
 
     useEffect(() => {
         if(url) {
@@ -59,9 +72,6 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
         }
     }, [url]);
 
-    const init = () => {
-        loadIndustries();
-    }
 
     const updateCompanyDetails = () => {
         setValues({
@@ -77,7 +87,8 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
             image: '',
             openings: '',
             count_of_placed_students: '',
-            loading: false
+            loading: false,
+            success: true
         })
     }
 
@@ -192,11 +203,11 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
         </form>
     );
 
-    // const showSuccess = () => (
-    //     <div className="alert alert-info" style={{ display: createdCompany.name ? '' : 'none' }}>
-    //         <h2>{`${createdCompany.name}`} is created!</h2>
-    //     </div>
-    // );
+    const showSuccess = (success) => (
+        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+            <h2>Company updated successfully!</h2>
+        </div>
+    );
 
     const showError = () => (
         <div className="alert alert-danger" style={{ display: company.error ? '' : 'none' }}>
@@ -214,7 +225,7 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
 
     const goBack = () => (
         <div className="mt-4 mb-2">
-            <Link to="/admin/dashboard" className="text-warning">
+            <Link to="/admin/companies" className="text-warning">
                 Back to dashboard
             </Link>
         </div>
@@ -229,7 +240,7 @@ const UpdateCompany = ({ match, auth, company, industry, updateCompany, loadIndu
                 <div className="col-md-8 offset-md-2">
                     {showLoading()}
                     {showError()}
-                    {/* {showSuccess()} */}
+                    {showSuccess(success)}
                     {newPostForm()}
                     {goBack()}
                 </div>

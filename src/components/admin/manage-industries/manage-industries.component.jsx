@@ -7,14 +7,14 @@ import Layout from '../../core/layout/layout.component';
 import ScrollArrow from '../../core/scroll-arrow/scroll-arrow.component';
 
 // Actions
-import { deleteCompany, loadCompanies } from '../../../redux/company/company.actions'; 
+import { deleteIndustry, loadIndustries } from '../../../redux/industry/industry.actions'; 
 
-const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
+const ManageIndustries = ({ auth, industry, loadIndustries, deleteIndustry  }) => {
 
     const [success, setSuccess] = useState(false);
     
     useEffect(() => {
-        loadCompanies();
+        loadIndustries();
     }, []);
 
     const showSuccess = (success) => (
@@ -33,10 +33,10 @@ const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
             <div className="row">
                 <div className="col-12 m-2">
                     <ul className="list-group">
-                        { company.companies.length > 0 ? company.companies.map((company,index) => (
+                        { industry.industries.length > 0 ? industry.industries.map((industry,index) => (
                             <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>{company.name}</strong>
-                                <Link to={`/admin/update/company/${company._id}`}>
+                                <strong>{industry.name}</strong>
+                                <Link to={`/admin/update/company/${industry._id}`}>
                                     <span className="badge badge-warning badge-pill">
                                         Update
                                     </span>
@@ -44,7 +44,7 @@ const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
                                 <span 
                                     className="badge badge-danger badge-pill" 
                                     onClick={() => {
-                                        deleteCompany(company._id, auth.user._id);
+                                        deleteIndustry(industry._id, auth.user._id);
                                         setSuccess(true);
                                     }}
                                     style={{cursor: 'pointer'}}
@@ -52,7 +52,7 @@ const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
                                     Delete
                                 </span>
                             </li>
-                        )) : <h5 className="text-danger">No companies found!!!</h5>}
+                        )) : <h5 className="text-danger">No industries found!!!</h5>}
                     </ul>
                 </div>
             </div>
@@ -63,12 +63,12 @@ const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
-    company: state.company
+    industry: state.industry
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    loadCompanies: () => dispatch( loadCompanies() ),
-    deleteCompany: (companyId, studentId) => dispatch( deleteCompany({ companyId, studentId }))
+    loadIndustries: () => dispatch( loadIndustries() ),
+    deleteIndustry: (industryId, studentId) => dispatch( deleteIndustry({ industryId, studentId }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageCompanies);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageIndustries);

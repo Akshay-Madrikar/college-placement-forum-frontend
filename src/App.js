@@ -19,6 +19,7 @@ import AddIndustry from './components/admin/add-industry/add-industry.component'
 import ManageCompanies from './components/admin/manage-companies/manage-companies.component';
 import ManageStudents from './components/admin/manage-students/manage-students.component';
 import UpdateCompany from './components/admin/update-company/update-company.component';
+import ManageIndustries from './components/admin/manage-industries/manage-industries.component';
 
 // User Components
 import SignIn from './components/user/sign-in/sign-in.component';
@@ -64,6 +65,7 @@ const App = () => {
               <AdminRoute exact path="/admin/create/company" component={AddCompany}/>
               <AdminRoute exact path="/admin/create/industry" component={AddIndustry}/>
               <AdminRoute exact path="/admin/companies" component={ManageCompanies}/>
+              <AdminRoute exact path="/admin/industries" component={ManageIndustries}/>
               <AdminRoute exact path="/admin/students" component={ManageStudents}/>
               <AdminRoute exact path="/admin/update/company/:companyId" component={UpdateCompany}/>
           </Switch>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Core Components
@@ -10,28 +10,53 @@ import { loadStudents, blockStudent, UnblockStudent } from '../../../redux/stude
 
 const ManageStudents = ({ auth, student, loadStudents, blockStudent, UnblockStudent  }) => {
     
+    const [values, setValues] = useState({
+        blockSuccess: false,
+        unBlockSuccess: false
+    });
+
+    const { blockSuccess, unBlockSuccess } = values;
+
     useEffect(() => {
         loadStudents();
     }, [loadStudents]);
 
+    const showBlockSuccess = (blockSuccess) => (
+        <div className="alert alert-danger" style={{ display: blockSuccess ? '' : 'none' }}>
+            <h2>Block successfull!</h2>
+        </div>
+    );
+
+    const showUnBlockSuccess = (UnBlockSuccess) => (
+        <div className="alert alert-info" style={{ display: UnBlockSuccess ? '' : 'none' }}>
+            <h2>Student has been unblocked!</h2>
+        </div>
+    );
+
     return (
         <Layout
-            title="Manage Students"
-            description="Perform actions on students"
+            title="Manage Users"
+            description="Perform actions on users"
             className="container-fluid"
         >
+            { showBlockSuccess(blockSuccess) }
+            { showUnBlockSuccess(unBlockSuccess) }
             <div className="row">
                 <div className="col-12 m-2">
                     <ul className="list-group">
                         { student.students.length > 0 ? student.students.map((student,index) => (
                             <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                                 <strong>{student.name}</strong>
+                                { student.role === 1 && <span className="badge badge-info badge-pill">admin</span> }
                                 {
                                     student.block_status === 1 
                                     ?
                                     (<span 
                                         className="badge badge-success badge-pill" 
-                                        onClick={() => UnblockStudent(student._id, auth.user._id)}
+                                        onClick={() => {
+                                            UnblockStudent(student._id, auth.user._id);
+                                            setValues({ ...values, unBlockSuccess: true });
+                                        }}
                                         style={{cursor: 'pointer'}}
                                         >
                                         Unblock
@@ -39,7 +64,10 @@ const ManageStudents = ({ auth, student, loadStudents, blockStudent, UnblockStud
                                     : 
                                     (<span 
                                         className="badge badge-danger badge-pill" 
-                                        onClick={() => blockStudent(student._id, auth.user._id)}
+                                        onClick={() => {
+                                            blockStudent(student._id, auth.user._id);
+                                            setValues({ ...values, blockSuccess: true });
+                                        }}
                                         style={{cursor: 'pointer'}}
                                         >
                                         Block

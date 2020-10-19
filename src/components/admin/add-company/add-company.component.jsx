@@ -24,6 +24,7 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
         image: '',
         count_of_placed_students: '',
         loading: false,
+        success: false,
         formData: {}
     });
 
@@ -42,7 +43,8 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
         image,
         count_of_placed_students,
         loading,
-        formData
+        formData,
+        success
     } = values;
 
     const { url, cloudinary_id } = imageValues;
@@ -71,7 +73,8 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
             image: '',
             openings: '',
             count_of_placed_students: '',
-            loading: false
+            loading: false,
+            success: true
         })
     }
 
@@ -189,11 +192,11 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
         </form>
     );
 
-    // const showSuccess = () => (
-    //     <div className="alert alert-info" style={{ display: createdCompany.name ? '' : 'none' }}>
-    //         <h2>{`${createdCompany.name}`} is created!</h2>
-    //     </div>
-    // );
+    const showSuccess = (success) => (
+        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+            <h2>{`${company.recent_added_company && company.recent_added_company.name}`} is created!</h2>
+        </div>
+    );
 
     const showError = () => (
         <div className="alert alert-danger" style={{ display: company.error ? '' : 'none' }}>
@@ -226,7 +229,7 @@ const AddCompany = ({ auth, company, industry, createCompany, loadIndustries }) 
                 <div className="col-md-8 offset-md-2">
                     {showLoading()}
                     {showError()}
-                    {/* {showSuccess()} */}
+                    {showSuccess(success)}
                     {newPostForm()}
                     {goBack()}
                 </div>
