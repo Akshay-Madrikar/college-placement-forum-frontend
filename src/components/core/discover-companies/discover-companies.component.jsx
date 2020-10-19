@@ -6,6 +6,7 @@ import Layout from '../layout/layout.component';
 import Checkbox from '../checkbox/checkbox.component';
 import Spinner from '../spinner/spinner.component';
 import Card from '../card/card.component';
+import ScrollArrow from '../scroll-arrow/scroll-arrow.component';
 
 // Actions
 import { loadFilteredCompanies, loadMoreCompanies } from '../../../redux/company/company.actions';
@@ -90,14 +91,14 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, loadMoreComp
     return (
         <Layout title="Discover Page" description="Companies coming to our college" className="container-fluid">
             <div className="row">
-                <div className="col-4">
+                <div className="col-3 border-right">
                     <h4>Filter by industries</h4>
                     <ul>
                         <Checkbox industries={industry.industries} handleFilters={ filters => handleFilters(filters, 'industryName')}/>
                     </ul>
                 </div>
 
-                <div className="col-8">
+                <div className="col-9">
                     <h2 className="mb-4">Companies</h2>
                     <div className="row">
                         {showError(company.error)}
@@ -114,6 +115,7 @@ const DiscoverCompanies = ({ loadFilteredCompanies, loadIndustries, loadMoreComp
                     <hr/>
                     {loadMoreButton()}
                 </div>
+                <ScrollArrow />
             </div>
         </Layout>
     );

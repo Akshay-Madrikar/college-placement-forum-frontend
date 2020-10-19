@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Core Components
@@ -6,6 +6,7 @@ import Layout from '../layout/layout.component';
 import Spinner from '../spinner/spinner.component';
 import Search from '../search/search.component';
 import Card from '../card/card.component';
+import ScrollArrow from '../scroll-arrow/scroll-arrow.component';
 
 // Actions
 import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents, loadCompaniesByOpenings } from '../../../redux/company/company.actions';
@@ -33,7 +34,7 @@ const Home = (
         <Layout title="Home" description="College Placement Forum" className="container-fluid">
             <Search />
             {showError(company.error)}
-            <h2 className="mb-4">Recent Added Companies</h2>
+            <h2 className="mb-4">Recent Joined Companies</h2>
             <div className="row">
                 { company.companies_by_arrival.length > 0 ? company.companies_by_arrival.map((company, index) => (
                         <div key={index} className="col-4 mb-3">
@@ -59,7 +60,7 @@ const Home = (
                     </div> 
                 )) : <Spinner/>}
             </div>
-            
+            <ScrollArrow />
         </Layout>
     );
 };

@@ -15,7 +15,7 @@ const Card = ({
         return (
             showViewProductButton && (
                 <Link to={`/company/${company._id}`}>
-                    <button className="btn btn-outline-primary mt-2 mb-2 mr-2">
+                    <button className="btn btn-outline-primary mt-2 mb-2 mr-2 text-center">
                         View Company
                     </button>
                 </Link>

@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 // Core Components
-import LandingPage from './components/core/landing-page/landing-page.component';
 import Home from './components/core/home/home.component';
 import DiscoverCompanies from './components/core/discover-companies/discover-companies.component';
 import Company from './components/core/company/company.component';

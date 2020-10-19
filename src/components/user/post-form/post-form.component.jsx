@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Core Components
-import Layout from '../../core/layout/layout.component';
 import Spinner from '../../core/spinner/spinner.component';
 
 // Utils

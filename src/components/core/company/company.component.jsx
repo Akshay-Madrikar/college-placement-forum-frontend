@@ -4,7 +4,6 @@ import parser from 'html-react-parser';
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
-import Spinner from '../../core/spinner/spinner.component';
 import Card from '../card/card.component';
 
 // Actions

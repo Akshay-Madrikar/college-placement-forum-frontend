@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import { deleteComment } from '../../../redux/post/post.actions';
 const CommentItem = (
     {   
         auth,
+        authorId,
         comment: { _id, text, postedBy, date },
         postId,
         deleteComment
@@ -23,12 +24,15 @@ const CommentItem = (
             <div>
             {/* Complete student information below*/}
             <Link to="">
-                {/* <img className='round-img' src={avatar} alt='' /> */}
+                <img className='round-img2' src={postedBy.pic.cloudinary_url} alt='' />
                 <h4>{postedBy.name}</h4>
             </Link>
             </div>
 
             <div>
+            {auth.success && authorId === postedBy._id && 
+                <span className="badge badge-info badge-pill">author</span>
+            }
             <p className='my-1'>{text}</p>
             <p className='post-date'>
             Posted { moment(date).fromNow() } ( {moment(date).format("dddd, MMMM Do YYYY, h:mm")} )

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Core Components
 import Layout from '../layout/layout.component';
-import Spinner from '../spinner/spinner.component';
+import ScrollArrow from '../scroll-arrow/scroll-arrow.component';
 
 // User Components
 import PostItem from '../../user/post-item/post-item.component';
@@ -25,6 +25,7 @@ const Posts = ({ post, loadPosts }) => {
                 {post.posts.map((post) => (
                     <PostItem key={post._id} post={post} />
                 ))}
+                <ScrollArrow />
             </div>
         </Layout>
     )

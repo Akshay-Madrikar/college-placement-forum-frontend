@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
+import ScrollArrow from '../../core/scroll-arrow/scroll-arrow.component';
 
 // Actions
 import { loadStudents, blockStudent, UnblockStudent } from '../../../redux/student/student.actions'; 
@@ -51,6 +51,7 @@ const ManageStudents = ({ auth, student, loadStudents, blockStudent, UnblockStud
                     </ul>
                 </div>
             </div>
+            <ScrollArrow />
         </Layout>
     );
 };

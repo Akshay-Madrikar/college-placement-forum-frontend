@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Core components
-import Spinner from '../../core/spinner/spinner.component';
+import ScrollArrow from '../scroll-arrow/scroll-arrow.component';
 import Layout from '../../core/layout/layout.component';
 
 // User components
@@ -42,7 +42,8 @@ const Post = (props) => {
                                props.post.current_post_in_view.comments.length > 0 ? props.post.current_post_in_view.comments.map( comment => (
                                     <CommentItem 
                                         key={comment._id} 
-                                        comment={comment} 
+                                        comment={comment}
+                                        authorId={props.post.current_post_in_view.postedBy._id} 
                                         postId={props.post.current_post_in_view._id}
                                     />
                                 )) : <h5 className="text-danger">No comments posted yet!</h5>
@@ -51,6 +52,7 @@ const Post = (props) => {
                         </>
                     )
                 }
+                <ScrollArrow />
         </Layout>
     )
 };

@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Core Components
 import Layout from '../../core/layout/layout.component';
+import ScrollArrow from '../../core/scroll-arrow/scroll-arrow.component';
 
 // Actions
 import { deleteCompany, loadCompanies } from '../../../redux/company/company.actions'; 
@@ -43,6 +44,7 @@ const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
                     </ul>
                 </div>
             </div>
+            <ScrollArrow />
         </Layout>
     );
 };
