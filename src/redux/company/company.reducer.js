@@ -31,6 +31,7 @@ const INTIAL_STATE = {
     filtered_companies: [],
     filtered_count: 0,
     count: 0,
+    total_count: 0,
     current_company_in_view: {},
     searched_companies: [],
     companies_by_arrival: [],
@@ -127,6 +128,7 @@ const companyReducer = ( state = INTIAL_STATE, action ) => {
             return {
                 ...state,
                 companies: action.payload,
+                total_count: action.payload.length,
                 success: true
             };
             

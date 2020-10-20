@@ -41,6 +41,7 @@ const PostItem = (
             </div>
 
             <div>
+            { postedBy.role === 1 && <span className="badge badge-info badge-pill">admin</span> }
             { pic && (<ShowImage id={pic.cloudinary_id} height={100} width={100}/>) }
             <p className='my-1'>{text}</p>
             <p className='post-date'>

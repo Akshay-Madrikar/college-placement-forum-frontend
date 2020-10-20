@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 // Core Components
@@ -9,19 +9,21 @@ import Card from '../card/card.component';
 import ScrollArrow from '../scroll-arrow/scroll-arrow.component';
 
 // Actions
-import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents, loadCompaniesByOpenings } from '../../../redux/company/company.actions';
+import { loadCompaniesByArrivals, loadCompaniesByMostPlacedStudents, loadCompaniesByOpenings, loadCompanies } from '../../../redux/company/company.actions';
 
 const Home = (
     { company, 
     loadCompaniesByArrivals, 
     loadCompaniesByMostPlacedStudents, 
-    loadCompaniesByOpenings 
+    loadCompaniesByOpenings,
+    loadCompanies 
 }) => {
 
     useEffect(() => {
         loadCompaniesByArrivals();
         loadCompaniesByMostPlacedStudents();
         loadCompaniesByOpenings();
+        loadCompanies();
     }, []);
 
     const showError = (error) => (
@@ -32,6 +34,20 @@ const Home = (
 
     return (
         <Layout title="Home" description="College Placement Forum" className="container-fluid">
+            <div className="d-flex justify-content-around row m-2 text-center">
+                <div className="border border-dark rounded m-3 p-4">
+                    <h1 className="counter text-primary">{company.total_count}</h1>
+                    <h3>Companies visited</h3>
+                </div>
+                <div className="border border-dark rounded m-3 p-4">
+                    <h1 className="counter text-primary">43</h1>
+                    <h3>Students placed</h3>
+                </div>
+                <div className="border border-dark rounded m-3 p-4">
+                    <h1 className="counter text-primary">100%</h1>
+                    <h3>Placement Gurantee</h3>
+                </div>
+            </div>
             <Search />
             {showError(company.error)}
             <h2 className="mb-4">Recent Joined Companies</h2>
@@ -71,6 +87,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     loadCompaniesByArrivals: () => dispatch( loadCompaniesByArrivals() ),
+    loadCompanies: () => dispatch( loadCompanies() ),
     loadCompaniesByMostPlacedStudents: () => dispatch( loadCompaniesByMostPlacedStudents() ),
     loadCompaniesByOpenings: () => dispatch( loadCompaniesByOpenings() )
 });

@@ -22,9 +22,13 @@ const Posts = ({ post, loadPosts }) => {
         <Layout title="Posts" description="Find all posts by students" className="container-fluid">
             <div>
                 <PostForm />
-                {post.posts.map((post) => (
-                    <PostItem key={post._id} post={post} />
-                ))}
+                <h4 className="text-dark">Posts:</h4>
+                {   post.posts.length > 0 ?
+                    post.posts.map((post) => (
+                        <PostItem key={post._id} post={post} />
+                    )) : 
+                    <h5 className="text-danger">No posts posted yet!</h5>
+                }
                 <ScrollArrow />
             </div>
         </Layout>

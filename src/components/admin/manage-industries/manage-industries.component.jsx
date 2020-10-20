@@ -34,15 +34,15 @@ const ManageIndustries = ({ auth, industry, loadIndustries, deleteIndustry  }) =
                 <div className="col-12 m-2">
                     <ul className="list-group">
                         { industry.industries.length > 0 ? industry.industries.map((industry,index) => (
-                            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>{industry.name}</strong>
+                            <li key={index} className="list-group-item d-flex align-items-center">
+                                <strong className="mr-auto p-2">{industry.name}</strong>
                                 <Link to={`/admin/update/company/${industry._id}`}>
-                                    <span className="badge badge-warning badge-pill">
+                                    <span className="badge badge-warning badge-pill m-2 p-3">
                                         Update
                                     </span>
                                 </Link>
                                 <span 
-                                    className="badge badge-danger badge-pill" 
+                                    className="badge badge-danger badge-pill m-2 p-3" 
                                     onClick={() => {
                                         deleteIndustry(industry._id, auth.user._id);
                                         setSuccess(true);

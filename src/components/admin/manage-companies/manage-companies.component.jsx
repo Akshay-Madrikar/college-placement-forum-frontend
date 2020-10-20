@@ -34,15 +34,15 @@ const ManageCompanies = ({ auth, company, loadCompanies, deleteCompany  }) => {
                 <div className="col-12 m-2">
                     <ul className="list-group">
                         { company.companies.length > 0 ? company.companies.map((company,index) => (
-                            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>{company.name}</strong>
+                            <li key={index} className="list-group-item d-flex align-items-center">
+                                <strong className="mr-auto p-2">{company.name}</strong>
                                 <Link to={`/admin/update/company/${company._id}`}>
-                                    <span className="badge badge-warning badge-pill">
+                                    <span className="badge badge-warning badge-pill m-2 p-3">
                                         Update
                                     </span>
                                 </Link>
                                 <span 
-                                    className="badge badge-danger badge-pill" 
+                                    className="badge badge-danger badge-pill m-2 p-3" 
                                     onClick={() => {
                                         deleteCompany(company._id, auth.user._id);
                                         setSuccess(true);

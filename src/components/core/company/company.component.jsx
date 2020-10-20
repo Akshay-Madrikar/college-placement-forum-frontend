@@ -24,7 +24,7 @@ const Company = (props) => {
 
     const showQuestions = () => (
         <div className="card mt-4 mb-5">
-                <h3 className="card-header">Question Bank</h3>
+                <h3 className="card-header">FAQ (Frequently Asked Questions)</h3>
                 <ul className="list-group">
                  <li className="list-group-item">
                      { props.company.current_company_in_view && props.company.current_company_in_view.description &&
@@ -61,7 +61,9 @@ const Company = (props) => {
                    props.company.current_company_in_view && props.company.current_company_in_view.description &&
                    <Card company={props.company.current_company_in_view} showViewProductButton={false}/>
                 }
-                {showQuestions()}
+                </div>
+                <div className="col-12">
+                    {showQuestions()}
                 </div>
             </div>
         </Layout>

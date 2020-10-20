@@ -318,7 +318,6 @@ export const loadCompanies = () => async(dispatch) =>{
             type: LOAD_ALL_COMPANIES_SUCCESS,
             payload: res.data
         });
-
     } catch(error) {
         dispatch({
             type: LOAD_ALL_COMPANIES_FAILURE,

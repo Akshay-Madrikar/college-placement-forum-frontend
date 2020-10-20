@@ -30,6 +30,7 @@ const CommentItem = (
             </div>
 
             <div>
+            { postedBy.role === 1 && <span className="badge badge-info badge-pill">admin</span> }
             {auth.success && authorId === postedBy._id && 
                 <span className="badge badge-info badge-pill">author</span>
             }
